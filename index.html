@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tiempo en Barcelona</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .location {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .location h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .location p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .current-weather {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+        }
+
+        .main-temp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .temp-display {
+            font-size: 5em;
+            color: white;
+            font-weight: 300;
+        }
+
+        .condition {
+            text-align: center;
+            color: white;
+        }
+
+        .condition-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .condition-text {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .detail-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .detail-card .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .detail-card .label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .detail-card .value {
+            color: white;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .hourly-forecast {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+        }
+
+        .hourly-forecast h2 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .hours-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 15px;
+            overflow-x: auto;
+        }
+
+        .hour-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 10px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .hour-card .time {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .hour-card .hour-icon {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .hour-card .temp {
+            color: white;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .hour-card .precipitation {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8em;
+            margin-top: 5px;
+        }
+
+        .daily-forecast {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+        }
+
+        .daily-forecast h2 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .days-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .day-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .day-name {
+            color: white;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .day-date {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9em;
+        }
+
+        .day-icon {
+            font-size: 3em;
+        }
+
+        .temp-range {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .temp-max {
+            color: white;
+            font-size: 2em;
+            font-weight: 600;
+        }
+
+        .temp-min {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.5em;
+        }
+
+        .day-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .day-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .day-detail-item .item-icon {
+            font-size: 1.2em;
+            width: 25px;
+        }
+
+        .day-detail-item .item-label {
+            color: rgba(255, 255, 255, 0.7);
+            margin-right: 5px;
+        }
+
+        .day-detail-item .item-value {
+            font-weight: 600;
+        }
+
+        .sun-times {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sun-time {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sun-time .sun-icon {
+            font-size: 1.5em;
+        }
+
+        .sun-time .sun-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8em;
+        }
+
+        .sun-time .sun-value {
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .main-temp {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .temp-display {
+                font-size: 4em;
+            }
+
+            .location h1 {
+                font-size: 2em;
+            }
+
+            .hours-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+
+            .days-container {
+                grid-template-columns: 1fr;
+            }
+
+            .day-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html" class="active">El Tiempo</a>
+            <a href="divulgacion.html">Divulgación</a>
+        </nav>
+
+        <div class="location">
+            <h1>Barcelona</h1>
+            <p id="current-date"></p>
+        </div>
+
+        <div class="current-weather">
+            <div class="main-temp">
+                <div class="temp-display" id="main-temp">10°</div>
+                <div class="condition">
+                    <div class="condition-icon" id="condition-icon">🌤️</div>
+                    <div class="condition-text" id="condition-text">Parcialmente nublado</div>
+                </div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail-card">
+                    <div class="icon">🌡️</div>
+                    <div class="label">Sensación térmica</div>
+                    <div class="value" id="feels-like">9°</div>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">💧</div>
+                    <div class="label">Humedad</div>
+                    <div class="value" id="humidity">68%</div>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">💨</div>
+                    <div class="label">Viento</div>
+                    <div class="value" id="wind">12 km/h</div>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">🌧️</div>
+                    <div class="label">Lluvia acumulada hoy</div>
+                    <div class="value" id="rain">0 mm</div>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">☀️</div>
+                    <div class="label">Índice UV</div>
+                    <div class="value" id="uv">2</div>
+                </div>
+                <div class="detail-card">
+                    <div class="icon">👁️</div>
+                    <div class="label">Visibilidad</div>
+                    <div class="value" id="visibility">10 km</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hourly-forecast">
+            <h2>Próximas 18 horas</h2>
+            <div class="hours-container" id="hourly-container">
+                <!-- Las horas se generarán dinámicamente -->
+            </div>
+        </div>
+
+        <div class="daily-forecast">
+            <h2>Próximos 4 días</h2>
+            <div class="days-container" id="daily-container">
+                <!-- Los días se generarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configurar fecha actual
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+
+        // Datos meteorológicos simulados para Barcelona
+        const weatherData = {
+            current: {
+                temp: 10.5,
+                feelsLike: 9,
+                humidity: 68,
+                wind: 12,
+                rain: 0,
+                uv: 2,
+                visibility: 10,
+                condition: 'partly_cloudy'
+            },
+            hourly: [
+                { time: '14:00', temp: 11, icon: '🌤️', precipitation: 10 },
+                { time: '15:00', temp: 12, icon: '🌤️', precipitation: 10 },
+                { time: '16:00', temp: 13, icon: '⛅', precipitation: 15 },
+                { time: '17:00', temp: 13, icon: '⛅', precipitation: 15 },
+                { time: '18:00', temp: 12, icon: '🌥️', precipitation: 20 },
+                { time: '19:00', temp: 11, icon: '🌥️', precipitation: 20 },
+                { time: '20:00', temp: 10, icon: '🌙', precipitation: 15 },
+                { time: '21:00', temp: 9, icon: '🌙', precipitation: 10 },
+                { time: '22:00', temp: 9, icon: '🌙', precipitation: 10 },
+                { time: '23:00', temp: 8, icon: '🌙', precipitation: 5 },
+                { time: '00:00', temp: 8, icon: '🌙', precipitation: 5 },
+                { time: '01:00', temp: 7, icon: '🌙', precipitation: 5 },
+                { time: '02:00', temp: 7, icon: '🌙', precipitation: 0 },
+                { time: '03:00', temp: 7, icon: '🌙', precipitation: 0 },
+                { time: '04:00', temp: 6, icon: '🌙', precipitation: 0 },
+                { time: '05:00', temp: 6, icon: '🌙', precipitation: 0 },
+                { time: '06:00', temp: 6, icon: '🌙', precipitation: 0 },
+                { time: '07:00', temp: 7, icon: '🌅', precipitation: 0 }
+            ],
+            daily: [
+                {
+                    day: 'Miércoles',
+                    date: '11 Feb',
+                    icon: '⛅',
+                    tempMax: 16,
+                    tempMin: 8,
+                    wind: 15,
+                    uv: 3,
+                    precipitation: 2,
+                    pressure: 1015,
+                    sunrise: '07:45',
+                    sunset: '18:25'
+                },
+                {
+                    day: 'Jueves',
+                    date: '12 Feb',
+                    icon: '☀️',
+                    tempMax: 18,
+                    tempMin: 9,
+                    wind: 10,
+                    uv: 4,
+                    precipitation: 0,
+                    pressure: 1018,
+                    sunrise: '07:44',
+                    sunset: '18:26'
+                },
+                {
+                    day: 'Viernes',
+                    date: '13 Feb',
+                    icon: '🌤️',
+                    tempMax: 17,
+                    tempMin: 10,
+                    wind: 12,
+                    uv: 3,
+                    precipitation: 1,
+                    pressure: 1016,
+                    sunrise: '07:43',
+                    sunset: '18:27'
+                },
+                {
+                    day: 'Sábado',
+                    date: '14 Feb',
+                    icon: '🌧️',
+                    tempMax: 14,
+                    tempMin: 9,
+                    wind: 18,
+                    uv: 2,
+                    precipitation: 8,
+                    pressure: 1010,
+                    sunrise: '07:42',
+                    sunset: '18:28'
+                }
+            ]
+        };
+
+        // Actualizar datos actuales
+        document.getElementById('main-temp').textContent = Math.round(weatherData.current.temp) + '°';
+        document.getElementById('feels-like').textContent = weatherData.current.feelsLike + '°';
+        document.getElementById('humidity').textContent = weatherData.current.humidity + '%';
+        document.getElementById('wind').textContent = weatherData.current.wind + ' km/h';
+        document.getElementById('rain').textContent = weatherData.current.rain + ' mm';
+        document.getElementById('uv').textContent = weatherData.current.uv;
+        document.getElementById('visibility').textContent = weatherData.current.visibility + ' km';
+
+        // Generar previsión horaria
+        const hourlyContainer = document.getElementById('hourly-container');
+        weatherData.hourly.forEach(hour => {
+            const hourCard = document.createElement('div');
+            hourCard.className = 'hour-card';
+            hourCard.innerHTML = `
+                <div class="time">${hour.time}</div>
+                <div class="hour-icon">${hour.icon}</div>
+                <div class="temp">${hour.temp}°</div>
+                <div class="precipitation">💧 ${hour.precipitation}%</div>
+            `;
+            hourlyContainer.appendChild(hourCard);
+        });
+
+        // Generar previsión de 4 días
+        const dailyContainer = document.getElementById('daily-container');
+        weatherData.daily.forEach(day => {
+            const dayCard = document.createElement('div');
+            dayCard.className = 'day-card';
+            dayCard.innerHTML = `
+                <div class="day-header">
+                    <div>
+                        <div class="day-name">${day.day}</div>
+                        <div class="day-date">${day.date}</div>
+                    </div>
+                    <div class="day-icon">${day.icon}</div>
+                </div>
+                <div class="temp-range">
+                    <div class="temp-max">${day.tempMax}°</div>
+                    <div class="temp-min">${day.tempMin}°</div>
+                </div>
+                <div class="day-details">
+                    <div class="day-detail-item">
+                        <span class="item-icon">💨</span>
+                        <span class="item-value">${day.wind} km/h</span>
+                    </div>
+                    <div class="day-detail-item">
+                        <span class="item-icon">☀️</span>
+                        <span class="item-label">UV:</span>
+                        <span class="item-value">${day.uv}</span>
+                    </div>
+                    <div class="day-detail-item">
+                        <span class="item-icon">🌧️</span>
+                        <span class="item-value">${day.precipitation} mm</span>
+                    </div>
+                    <div class="day-detail-item">
+                        <span class="item-icon">🌡️</span>
+                        <span class="item-value">${day.pressure} hPa</span>
+                    </div>
+                </div>
+                <div class="sun-times">
+                    <div class="sun-time">
+                        <div class="sun-icon">🌅</div>
+                        <div class="sun-label">Salida</div>
+                        <div class="sun-value">${day.sunrise}</div>
+                    </div>
+                    <div class="sun-time">
+                        <div class="sun-icon">🌇</div>
+                        <div class="sun-label">Puesta</div>
+                        <div class="sun-value">${day.sunset}</div>
+                    </div>
+                </div>
+            `;
+            dailyContainer.appendChild(dayCard);
+        });
+    </script>
+</body>
+</html>

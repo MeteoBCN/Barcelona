@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divulgación Meteorológica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .article-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 25px;
+            color: white;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .article-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .article-card h3 {
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        .article-card p {
+            line-height: 1.7;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+
+        .article-card .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.95em;
+        }
+
+        .extreme-stat {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(255, 193, 7, 0.3));
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .extreme-stat h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .extreme-stat .value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .extreme-stat .description {
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .curiosity-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .curiosity-card .number {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .curiosity-card h4 {
+            display: inline-block;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .curiosity-card p {
+            margin-top: 15px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .article-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+
+            .tab-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">El Tiempo</a>
+            <a href="divulgacion.html" class="active">Divulgación</a>
+        </nav>
+
+        <div class="header">
+            <h1>🌍 Divulgación Meteorológica</h1>
+            <p>Descubre los secretos de la atmósfera</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('fenomenos')">Fenómenos</button>
+            <button class="tab-button" onclick="showTab('extremos')">Récords Extremos</button>
+            <button class="tab-button" onclick="showTab('curiosidades')">Curiosidades</button>
+        </div>
+
+        <!-- FENÓMENOS METEOROLÓGICOS -->
+        <div id="fenomenos" class="content-section active">
+            <div class="article-grid">
+                <div class="article-card">
+                    <div class="icon">⚡</div>
+                    <h3>Tormentas Eléctricas</h3>
+                    <p>Una tormenta eléctrica típica libera la misma energía que una bomba nuclear de 20 kilotones. Los rayos alcanzan temperaturas de hasta 30.000°C, cinco veces más caliente que la superficie del Sol.</p>
+                    <div class="highlight">
+                        💡 Dato: Cada segundo caen unos 100 rayos en la Tierra
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="icon">🌪️</div>
+                    <h3>Tornados</h3>
+                    <p>Los tornados más violentos (EF5) pueden alcanzar vientos de más de 480 km/h. Se forman cuando aire cálido y húmedo choca con aire frío y seco, creando una rotación vertical que puede tocar el suelo.</p>
+                    <div class="highlight">
+                        💡 Dato: Estados Unidos experimenta unos 1.200 tornados al año
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="icon">🌊</div>
+                    <h3>Huracanes</h3>
+                    <p>Un huracán promedio libera tanta energía en un día como 200 veces el consumo eléctrico mundial. Su ojo puede tener entre 30 y 65 km de diámetro y es una zona de calma relativa.</p>
+                    <div class="highlight">
+                        💡 Dato: Los huracanes giran en sentido antihorario en el hemisferio norte
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="icon">❄️</div>
+                    <h3>Nevadas Intensas</h3>
+                    <p>Cada copo de nieve es único debido a las infinitas variaciones en temperatura y humedad durante su formación. En condiciones extremas, pueden caer hasta 30 cm de nieve por hora.</p>
+                    <div class="highlight">
+                        💡 Dato: El 12% de la superficie terrestre está cubierta de nieve permanente
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="icon">🌈</div>
+                    <h3>Arcoíris</h3>
+                    <p>Un arcoíris completo forma un círculo de 360°, aunque desde el suelo solo vemos un arco. Los dobles arcoíris tienen los colores invertidos en el segundo arco debido a una doble reflexión de luz.</p>
+                    <div class="highlight">
+                        💡 Dato: Es imposible que dos personas vean exactamente el mismo arcoíris
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="icon">🌫️</div>
+                    <h3>Niebla</h3>
+                    <p>La niebla es simplemente una nube que toca el suelo. Se forma cuando el aire se enfría hasta su punto de rocío. La niebla más densa puede reducir la visibilidad a menos de 50 metros.</p>
+                    <div class="highlight">
+                        💡 Dato: San Francisco tiene niebla más de 100 días al año
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RÉCORDS EXTREMOS -->
+        <div id="extremos" class="content-section">
+            <div class="extreme-stat">
+                <h4>🔥 Temperatura más alta registrada</h4>
+                <div class="value">56.7°C</div>
+                <div class="description">Death Valley, California (10 de julio de 1913). Este lugar es uno de los más calurosos y secos del planeta, con temperaturas que regularmente superan los 50°C en verano.</div>
+            </div>
+
+            <div class="extreme-stat">
+                <h4>🥶 Temperatura más baja registrada</h4>
+                <div class="value">-89.2°C</div>
+                <div class="description">Base Vostok, Antártida (21 de julio de 1983). A esta temperatura, el dióxido de carbono del aire se puede solidificar y la carne expuesta se congela en segundos.</div>
+            </div>
+
+            <div class="extreme-stat">
+                <h4>🌧️ Lluvia más intensa en 24 horas</h4>
+                <div class="value">1,825 mm</div>
+                <div class="description">Foc-Foc, Isla de la Reunión (8 de enero de 1966). Casi dos metros de agua cayeron en un solo día debido a un ciclón tropical.</div>
+            </div>
+
+            <div class="extreme-stat">
+                <h4>💨 Viento más fuerte registrado</h4>
+                <div class="value">408 km/h</div>
+                <div class="description">Barrow Island, Australia (10 de abril de 1996). Esta ráfaga fue registrada durante el paso del ciclón tropical Olivia.</div>
+            </div>
+
+            <div class="extreme-stat">
+                <h4>☂️ Lugar más lluvioso del mundo</h4>
+                <div class="value">11,872 mm/año</div>
+                <div class="description">Mawsynram, India. Este pueblo en las colinas de Meghalaya recibe lluvias torrenciales durante el monzón, más de 40 veces la media española.</div>
+            </div>
+
+            <div class="extreme-stat">
+                <h4>🏜️ Lugar más seco del mundo</h4>
+                <div class="value">0.76 mm/año</div>
+                <div class="description">Desierto de Atacama, Chile. Algunas estaciones meteorológicas nunca han registrado lluvia. Es tan seco que se usa para simular condiciones de Marte.</div>
+            </div>
+        </div>
+
+        <!-- CURIOSIDADES -->
+        <div id="curiosidades" class="content-section">
+            <div class="curiosity-card">
+                <span class="number">1</span>
+                <h4>El sonido del trueno</h4>
+                <p>El trueno es causado por la rápida expansión del aire que rodea un rayo. Como el rayo calienta el aire a 30.000°C en microsegundos, el aire se expande más rápido que la velocidad del sonido, creando una onda de choque que escuchamos como trueno. Puedes calcular la distancia de una tormenta: cada 3 segundos entre el rayo y el trueno equivalen a aproximadamente 1 kilómetro.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">2</span>
+                <h4>Por qué el cielo es azul</h4>
+                <p>El cielo es azul debido a un fenómeno llamado dispersión de Rayleigh. La luz solar contiene todos los colores del espectro, pero la luz azul tiene una longitud de onda más corta que se dispersa en todas direcciones al chocar con las moléculas de aire. Por eso vemos el cielo azul desde cualquier ángulo, mientras que al atardecer, el sol atraviesa más atmósfera y solo llegan los tonos rojos y naranjas.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">3</span>
+                <h4>Relámpagos volcánicos</h4>
+                <p>Durante erupciones volcánicas explosivas pueden generarse rayos dentro de la nube de ceniza. Esto ocurre porque las partículas de ceniza, roca y hielo chocan entre sí y se cargan eléctricamente. El resultado son tormentas eléctricas espectaculares con cientos de rayos en pocos minutos, creando un espectáculo único llamado "tormenta sucia".</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">4</span>
+                <h4>El efecto mariposa</h4>
+                <p>Acuñado por Edward Lorenz en 1963, sugiere que el aleteo de una mariposa en Brasil podría, en teoría, desencadenar un tornado en Texas semanas después. Esto ilustra la extrema sensibilidad del clima a las condiciones iniciales, haciendo que la predicción precisa más allá de 10-14 días sea prácticamente imposible con la tecnología actual.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">5</span>
+                <h4>Lluvia de animales</h4>
+                <p>Aunque suena a leyenda, realmente pueden llover peces, ranas o incluso pájaros. Los tornados y trombas marinas son lo suficientemente potentes como para succionar pequeños animales acuáticos y transportarlos varios kilómetros antes de depositarlos durante la lluvia. Este fenómeno ha sido documentado científicamente en numerosas ocasiones.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">6</span>
+                <h4>El peso de las nubes</h4>
+                <p>Una nube de tormenta típica pesa alrededor de 500.000 toneladas, equivalente a 100 elefantes. A pesar de este peso enorme, flotan porque las gotas de agua que las componen son tan pequeñas que la resistencia del aire las mantiene suspendidas. Una sola gota de lluvia puede contener hasta un millón de gotas de nube.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">7</span>
+                <h4>Rayos en otros planetas</h4>
+                <p>No solo en la Tierra hay rayos. Júpiter tiene relámpagos 1.000 veces más potentes que los terrestres. Venus también experimenta tormentas eléctricas intensas, y se han detectado posibles rayos en Saturno y Urano. En Júpiter, algunos rayos pueden ser del tamaño de toda la Tierra.</p>
+            </div>
+
+            <div class="curiosity-card">
+                <span class="number">8</span>
+                <h4>Nieve a 40°C</h4>
+                <p>En condiciones muy raras de baja humedad, puede nevar incluso con temperaturas de hasta 40°C. Esto ocurre cuando la nieve cae desde altitudes muy elevadas donde hace mucho frío. Los copos se subliman (pasan de sólido a gas) antes de tocar el suelo, fenómeno conocido como "virga" que se ve como cortinas de precipitación que no llegan al suelo.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Desactivar todos los botones
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            document.getElementById(tabName).classList.add('active');
+
+            // Activar el botón correspondiente
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
