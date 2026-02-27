@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Maestro — Agendar Cita</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --dark: #111;
+  --card: #181818;
+  --border: #242424;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-dim: rgba(201,168,76,0.10);
+  --cream: #f2ece0;
+  --gray: #5a5a5a;
+  --light-gray: #888;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.site-wrapper {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+nav {
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.97);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 58px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light-gray);
+  text-decoration: none;
+  padding: 8px 11px;
+  border-radius: 2px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+
+/* PAGE HEADER */
+.page-header {
+  padding: 40px 24px 32px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 60%);
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.page-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.page-header h1 em { font-style: italic; color: var(--gold); }
+.page-header p { font-size: 0.85rem; color: var(--light-gray); }
+
+/* STATS */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+.stat {
+  padding: 18px 16px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 5px;
+}
+
+/* TABS */
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light-gray);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  margin-bottom: -1px;
+}
+.tab-btn:first-child { border-right: 1px solid var(--border); }
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* CONTENT */
+.tab-content { display: none; padding: 24px 20px; }
+.tab-content.active { display: block; }
+
+/* FORM ELEMENTS */
+.form-group { margin-bottom: 18px; }
+label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 7px;
+}
+input, select, textarea {
+  width: 100%;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  font-size: 0.92rem;
+  padding: 12px 14px;
+  border-radius: 3px;
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+select option { background: var(--dark); }
+textarea { resize: vertical; min-height: 76px; }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5) sepia(1) saturate(3) hue-rotate(5deg);
+  cursor: pointer;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* SERVICES GRID */
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.service-card {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 13px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.service-card:hover { border-color: rgba(201,168,76,0.4); }
+.service-card.selected {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+.svc-name { font-size: 0.83rem; font-weight: 500; color: var(--cream); }
+.svc-row { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+.svc-dur { font-size: 0.7rem; color: var(--gray); }
+.svc-price { font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--gold); }
+
+/* TIME SLOTS */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+}
+.slot {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  color: var(--light-gray);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  padding: 10px 4px;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.slot:hover:not(.taken) { border-color: var(--gold); color: var(--gold); }
+.slot.selected { background: var(--gold); border-color: var(--gold); color: var(--black); font-weight: 600; }
+.slot.taken { opacity: 0.28; cursor: not-allowed; text-decoration: line-through; }
+
+/* SUBMIT */
+.btn-primary {
+  width: 100%;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+.btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.25); }
+.btn-primary:active { transform: translateY(0); }
+
+/* SECTION DIVIDER */
+.form-divider {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.57rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 22px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* APPOINTMENTS */
+.filter-row { display: flex; gap: 6px; margin-bottom: 16px; }
+.filter-btn {
+  background: var(--dark);
+  border: 1px solid var(--border);
+  color: var(--gray);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 7px 13px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); }
+
+.appt-list { display: flex; flex-direction: column; gap: 10px; }
+
+.appt-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideIn 0.28s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.appt-main { flex: 1; min-width: 0; }
+.appt-client { font-weight: 600; font-size: 0.9rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.appt-meta { font-size: 0.75rem; color: var(--light-gray); }
+.appt-side { text-align: right; flex-shrink: 0; }
+.appt-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--gold);
+  font-weight: 500;
+}
+.appt-date { font-size: 0.72rem; color: var(--gray); margin-bottom: 5px; }
+.appt-price {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.28);
+  background: var(--gold-dim);
+  padding: 2px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+.btn-del {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  width: 28px; height: 28px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s;
+}
+.btn-del:hover { border-color: #c0392b; color: #c0392b; }
+
+/* EMPTY */
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--gray);
+}
+.empty-state .e-icon { font-size: 2.2rem; margin-bottom: 10px; }
+.empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 12px 22px;
+  border-radius: 2px;
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 999;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* FOOTER */
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 26px 20px;
+  text-align: center;
+}
+.footer-brand { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--cream); margin-bottom: 5px; }
+.footer-brand span { color: var(--gold); }
+.footer-info { font-family: 'DM Mono', monospace; font-size: 0.58rem; letter-spacing: 0.12em; color: var(--gray); text-transform: uppercase; line-height: 2; }
+</style>
+</head>
+<body>
+<div class="site-wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">El <span>Maestro</span></a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="precios.html">Precios</a>
+        <a href="agenda.html" class="active">Agendar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="page-label">Reserva en línea</p>
+    <h1>Agenda tu <em>Cita</em></h1>
+    <p>Reserva en segundos, sin llamadas ni esperas.</p>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num" id="statToday">0</div>
+      <div class="stat-label">Hoy</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statTotal">0</div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statRevenue">$0</div>
+      <div class="stat-label">Ingresos</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('book', this)">✦ Nueva Cita</button>
+    <button class="tab-btn" onclick="switchTab('list', this)">☰ Citas Agendadas</button>
+  </div>
+
+  <!-- TAB: BOOKING -->
+  <div class="tab-content active" id="tab-book">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Nombre del cliente</label>
+        <input type="text" id="fName" placeholder="Juan García" />
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="fPhone" placeholder="555-1234" />
+      </div>
+    </div>
+
+    <div class="form-divider">Servicio</div>
+    <div class="form-group">
+      <div class="services-grid" id="servicesGrid"></div>
+    </div>
+
+    <div class="form-divider">Fecha & Barbero</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" id="fDate" />
+      </div>
+      <div class="form-group">
+        <label>Barbero</label>
+        <select id="fBarber">
+          <option value="">Seleccionar</option>
+          <option>Carlos "El Maestro"</option>
+          <option>Miguel</option>
+          <option>Diego</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-divider">Horario Disponible</div>
+    <div class="form-group">
+      <div class="time-grid" id="timeGrid"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Notas (opcional)</label>
+      <textarea id="fNotes" placeholder="Instrucciones especiales, estilo deseado..."></textarea>
+    </div>
+
+    <button class="btn-primary" onclick="bookAppointment()">✦ Confirmar Cita</button>
+
+  </div>
+
+  <!-- TAB: LIST -->
+  <div class="tab-content" id="tab-list">
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter('all', this)">Todas</button>
+      <button class="filter-btn" onclick="setFilter('today', this)">Hoy</button>
+      <button class="filter-btn" onclick="setFilter('upcoming', this)">Próximas</button>
+      <button class="filter-btn" onclick="setFilter('past', this)">Pasadas</button>
+    </div>
+    <div class="appt-list" id="apptList"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">El <span>Maestro</span> Barbería</div>
+    <div class="footer-info">
+      Av. Reforma 245 · CDMX &nbsp;|&nbsp; +52 55 1234 5678<br>
+      © 2025 El Maestro Barbería
+    </div>
+  </footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SERVICES = [
+  { name: "Corte Clásico",    price: 150, dur: "30 min" },
+  { name: "Corte + Barba",    price: 250, dur: "50 min" },
+  { name: "Afeitado Navaja",  price: 180, dur: "35 min" },
+  { name: "Fade / Degradado", price: 200, dur: "45 min" },
+  { name: "Corte Niños",      price: 100, dur: "25 min" },
+  { name: "Tinte / Color",    price: 350, dur: "60 min" },
+];
+
+const TIMES = [
+  "9:00","9:30","10:00","10:30","11:00","11:30",
+  "12:00","12:30","14:00","14:30","15:00","15:30",
+  "16:00","16:30","17:00","17:30"
+];
+
+let selService = null;
+let selTime = null;
+let filter = 'all';
+let appts = [];
+
+// Load from localStorage
+try { appts = JSON.parse(localStorage.getItem('maestro_appts') || '[]'); } catch(e) {}
+
+// Init
+const todayStr = new Date().toISOString().split('T')[0];
+document.getElementById('fDate').value = todayStr;
+document.getElementById('fDate').min = todayStr;
+document.getElementById('fDate').addEventListener('change', () => { selTime = null; renderSlots(); });
+document.getElementById('fBarber').addEventListener('change', () => { selTime = null; renderSlots(); });
+
+buildServices();
+renderSlots();
+renderAppts();
+updateStats();
+
+function buildServices() {
+  const g = document.getElementById('servicesGrid');
+  g.innerHTML = SERVICES.map((s,i) => `
+    <div class="service-card" id="svc${i}" onclick="pickService(${i})">
+      <div class="svc-name">${s.name}</div>
+      <div class="svc-row">
+        <span class="svc-dur">${s.dur}</span>
+        <span class="svc-price">$${s.price}</span>
+      </div>
+    </div>`).join('');
+}
+
+function pickService(i) {
+  selService = i;
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('svc'+i).classList.add('selected');
+}
+
+function renderSlots() {
+  const date = document.getElementById('fDate').value;
+  const barber = document.getElementById('fBarber').value;
+  document.getElementById('timeGrid').innerHTML = TIMES.map(t => {
+    const taken = barber && appts.some(a => a.date === date && a.time === t && a.barber === barber);
+    const cls = taken ? 'taken' : (selTime === t ? 'selected' : '');
+    return `<div class="slot ${cls}" onclick="${!taken ? `pickSlot('${t}')` : ''}">${t}</div>`;
+  }).join('');
+}
+
+function pickSlot(t) {
+  selTime = t;
+  renderSlots();
+}
+
+function bookAppointment() {
+  const name   = document.getElementById('fName').value.trim();
+  const phone  = document.getElementById('fPhone').value.trim();
+  const date   = document.getElementById('fDate').value;
+  const barber = document.getElementById('fBarber').value;
+  const notes  = document.getElementById('fNotes').value.trim();
+
+  if (!name)              return toast('⚠ Ingresa el nombre del cliente');
+  if (selService === null) return toast('⚠ Selecciona un servicio');
+  if (!date)              return toast('⚠ Selecciona una fecha');
+  if (!barber)            return toast('⚠ Selecciona un barbero');
+  if (!selTime)           return toast('⚠ Selecciona un horario');
+
+  appts.unshift({
+    id: Date.now(),
+    client: name, phone,
+    service: SERVICES[selService].name,
+    price: SERVICES[selService].price,
+    date, time: selTime, barber, notes,
+  });
+  save();
+
+  // reset
+  document.getElementById('fName').value = '';
+  document.getElementById('fPhone').value = '';
+  document.getElementById('fNotes').value = '';
+  document.getElementById('fBarber').value = '';
+  selService = null; selTime = null;
+  document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+  renderSlots();
+  toast('✦ Cita confirmada');
+  switchTab('list', document.querySelectorAll('.tab-btn')[1]);
+}
+
+function deleteAppt(id) {
+  appts = appts.filter(a => a.id !== id);
+  save();
+  toast('Cita eliminada');
+}
+
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAppts();
+}
+
+function renderAppts() {
+  const list = document.getElementById('apptList');
+  const today = new Date().toISOString().split('T')[0];
+
+  let data = appts;
+  if (filter === 'today')    data = appts.filter(a => a.date === today);
+  if (filter === 'upcoming') data = appts.filter(a => a.date > today);
+  if (filter === 'past')     data = appts.filter(a => a.date < today);
+
+  if (!data.length) {
+    list.innerHTML = `<div class="empty-state"><div class="e-icon">✂</div><p>Sin citas en este filtro.<br>¡Agenda la primera desde la pestaña anterior!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = data.map(a => {
+    const d = new Date(a.date + 'T12:00:00');
+    const ds = d.toLocaleDateString('es-MX', { weekday:'short', day:'numeric', month:'short' });
+    const barberShort = a.barber.split('"')[0].trim().replace(' ', '\u00a0');
+    return `<div class="appt-card">
+      <div class="appt-main">
+        <div class="appt-client">${a.client}</div>
+        <div class="appt-meta">${a.service} · ${barberShort}${a.notes ? ' · <em style="color:var(--gray)">' + a.notes + '</em>' : ''}</div>
+      </div>
+      <div class="appt-side">
+        <div class="appt-date">${ds}</div>
+        <div class="appt-time">${a.time}</div>
+        <div class="appt-price">$${a.price}</div>
+      </div>
+      <button class="btn-del" onclick="deleteAppt(${a.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function updateStats() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('statToday').textContent = appts.filter(a => a.date === today).length;
+  document.getElementById('statTotal').textContent = appts.length;
+  const rev = appts.reduce((s,a) => s + a.price, 0);
+  document.getElementById('statRevenue').textContent = '$' + rev.toLocaleString('es-MX');
+}
+
+function save() {
+  try { localStorage.setItem('maestro_appts', JSON.stringify(appts)); } catch(e){}
+  renderAppts();
+  updateStats();
+  renderSlots();
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  if (id === 'list') renderAppts();
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>

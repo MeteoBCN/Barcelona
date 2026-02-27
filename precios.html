@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Maestro — Precios</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --dark: #111;
+  --card: #181818;
+  --border: #242424;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-dim: rgba(201,168,76,0.10);
+  --cream: #f2ece0;
+  --gray: #5a5a5a;
+  --light-gray: #888;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.site-wrapper {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+nav {
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.97);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 58px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light-gray);
+  text-decoration: none;
+  padding: 8px 11px;
+  border-radius: 2px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+
+/* PAGE HEADER */
+.page-header {
+  padding: 48px 24px 40px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.07) 0%, transparent 60%);
+}
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 100px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.page-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+.page-header h1 em { font-style: italic; color: var(--gold); }
+.page-header p {
+  font-size: 0.88rem;
+  color: var(--light-gray);
+  line-height: 1.6;
+}
+
+/* MAIN CONTENT */
+.content { padding: 36px 20px; flex: 1; }
+
+/* CATEGORY */
+.category { margin-bottom: 36px; }
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.category-title h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.category-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.category-icon {
+  width: 30px; height: 30px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  color: var(--gold);
+}
+
+/* PRICE ITEMS */
+.price-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+
+.price-item {
+  background: var(--card);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transition: background 0.2s;
+  position: relative;
+}
+.price-item:hover { background: #1e1e1e; }
+.price-item.featured {
+  background: rgba(201,168,76,0.05);
+  border-left: 2px solid var(--gold);
+}
+.price-item-info { flex: 1; }
+.price-item-name {
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--cream);
+  margin-bottom: 3px;
+}
+.price-item-desc {
+  font-size: 0.75rem;
+  color: var(--light-gray);
+  line-height: 1.4;
+}
+.price-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.price-duration {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+.price-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.price-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gold);
+  color: var(--black);
+  padding: 2px 7px;
+  border-radius: 1px;
+  font-weight: 600;
+}
+
+/* PACKAGES */
+.packages { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+.package-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 22px;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.package-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-1px); }
+.package-card.highlight {
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.04);
+}
+.package-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.package-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.package-includes {
+  font-size: 0.8rem;
+  color: var(--light-gray);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.package-includes span { color: var(--gold); margin-right: 6px; }
+.package-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.package-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.package-price small {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--light-gray);
+  font-weight: 400;
+  display: block;
+  margin-top: 3px;
+}
+.package-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(201,168,76,0.35);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+/* NOTE */
+.note-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--gold);
+  border-radius: 3px;
+  padding: 16px 18px;
+  margin-bottom: 36px;
+}
+.note-box p {
+  font-size: 0.82rem;
+  color: var(--light-gray);
+  line-height: 1.6;
+}
+.note-box strong { color: var(--cream); }
+
+/* CTA */
+.cta-band {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 44px 24px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+.cta-band h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.cta-band h2 em { font-style: italic; color: var(--gold); }
+.cta-band p { font-size: 0.88rem; color: var(--light-gray); margin-bottom: 24px; line-height: 1.6; }
+
+/* BUTTONS */
+.btn-gold {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.18s, box-shadow 0.2s;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.28); }
+
+/* FOOTER */
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.footer-brand span { color: var(--gold); }
+.footer-info {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+</style>
+</head>
+<body>
+<div class="site-wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">El <span>Maestro</span></a>
+      <div class="nav-links">
+        <a href="index.html">Inicio</a>
+        <a href="precios.html" class="active">Precios</a>
+        <a href="agenda.html">Agendar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <p class="page-label">Lista de Servicios</p>
+    <h1>Nuestros <em>Precios</em></h1>
+    <p>Calidad sin sorpresas. Todos los precios incluyen<br>el servicio completo con los mejores productos.</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- CORTES -->
+    <div class="category">
+      <div class="category-title">
+        <div class="category-icon">✂</div>
+        <h2>Cortes</h2>
+      </div>
+      <div class="price-list">
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Corte Clásico</div>
+            <div class="price-item-desc">Tijeras y máquina, acabado perfecto</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">30 min</span>
+            <span class="price-tag">$150</span>
+          </div>
+        </div>
+        <div class="price-item featured">
+          <div class="price-badge">Popular</div>
+          <div class="price-item-info">
+            <div class="price-item-name">Fade / Degradado</div>
+            <div class="price-item-desc">Degradado preciso, cualquier nivel</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">45 min</span>
+            <span class="price-tag">$200</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Corte Niños</div>
+            <div class="price-item-desc">Hasta 12 años, servicio rápido</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">25 min</span>
+            <span class="price-tag">$100</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Diseño / Líneas</div>
+            <div class="price-item-desc">Perfilado y diseño con navaja</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">20 min</span>
+            <span class="price-tag">$100</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BARBA -->
+    <div class="category">
+      <div class="category-title">
+        <div class="category-icon">🪒</div>
+        <h2>Barba</h2>
+      </div>
+      <div class="price-list">
+        <div class="price-item featured">
+          <div class="price-badge">Firma</div>
+          <div class="price-item-info">
+            <div class="price-item-name">Afeitado con Navaja</div>
+            <div class="price-item-desc">Afeitado caliente clásico, toalla caliente y post-shave</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">35 min</span>
+            <span class="price-tag">$180</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Perfilado de Barba</div>
+            <div class="price-item-desc">Definición de líneas y forma</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">20 min</span>
+            <span class="price-tag">$120</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Arreglo Bigote</div>
+            <div class="price-item-desc">Recorte y forma de bigote</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">15 min</span>
+            <span class="price-tag">$80</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLOR -->
+    <div class="category">
+      <div class="category-title">
+        <div class="category-icon">🎨</div>
+        <h2>Color & Tratamientos</h2>
+      </div>
+      <div class="price-list">
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Tinte de Cabello</div>
+            <div class="price-item-desc">Color completo con producto incluido</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">60 min</span>
+            <span class="price-tag">$350</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Canas (Barba o Cabello)</div>
+            <div class="price-item-desc">Cobertura natural de canas</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">50 min</span>
+            <span class="price-tag">$280</span>
+          </div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-info">
+            <div class="price-item-name">Hidratación Capilar</div>
+            <div class="price-item-desc">Mascarilla y tratamiento nutritivo</div>
+          </div>
+          <div class="price-item-meta">
+            <span class="price-duration">30 min</span>
+            <span class="price-tag">$200</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBOS -->
+    <p class="page-label" style="margin-bottom:14px">Nuestros Combos</p>
+    <div class="packages">
+      <div class="package-card">
+        <div class="package-label">Combo Básico</div>
+        <div class="package-name">Corte + Barba</div>
+        <div class="package-includes">
+          <div><span>✦</span>Corte clásico con máquina y tijeras</div>
+          <div><span>✦</span>Perfilado de barba con navaja</div>
+          <div><span>✦</span>Producto styling incluido</div>
+        </div>
+        <div class="package-footer">
+          <div class="package-price">$250 <small>Ahorra $50</small></div>
+          <a href="agenda.html" class="package-badge">Agendar →</a>
+        </div>
+      </div>
+
+      <div class="package-card highlight">
+        <div class="package-label">Combo Premium — Más Elegido</div>
+        <div class="package-name">El Maestro Completo</div>
+        <div class="package-includes">
+          <div><span>✦</span>Fade / Degradado premium</div>
+          <div><span>✦</span>Afeitado con navaja y toalla caliente</div>
+          <div><span>✦</span>Hidratación capilar</div>
+          <div><span>✦</span>Post-shave y producto styling</div>
+        </div>
+        <div class="package-footer">
+          <div class="package-price">$520 <small>Ahorra $80</small></div>
+          <a href="agenda.html" class="package-badge" style="color:var(--gold);border-color:var(--gold);background:var(--gold-dim)">Agendar →</a>
+        </div>
+      </div>
+
+      <div class="package-card">
+        <div class="package-label">Combo Familiar</div>
+        <div class="package-name">Papá + Hijo</div>
+        <div class="package-includes">
+          <div><span>✦</span>Corte clásico adulto</div>
+          <div><span>✦</span>Corte niño (hasta 12 años)</div>
+          <div><span>✦</span>Atención simultánea disponible</div>
+        </div>
+        <div class="package-footer">
+          <div class="package-price">$220 <small>Ahorra $30</small></div>
+          <a href="agenda.html" class="package-badge">Agendar →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTE -->
+    <div class="note-box">
+      <p><strong>Política de cancelación:</strong> Puedes cancelar o reagendar tu cita hasta <strong>2 horas antes</strong> sin costo. Llegadas con más de 15 minutos de retraso pueden ser reagendadas. Los precios pueden variar según longitud y tratamiento adicional.</p>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <h2>¿Ya elegiste tu <em>servicio</em>?</h2>
+    <p>Reserva en segundos y asegura tu lugar<br>con el mejor barbero de la ciudad.</p>
+    <a class="btn-gold" href="agenda.html">✦ Agendar mi Cita</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">El <span>Maestro</span> Barbería</div>
+    <div class="footer-info">
+      Av. Reforma 245 · CDMX &nbsp;|&nbsp; +52 55 1234 5678<br>
+      © 2025 El Maestro Barbería — Todos los derechos reservados
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

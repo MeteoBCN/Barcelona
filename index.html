@@ -1,1 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Maestro — Barbería</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #080808;
+  --dark: #111;
+  --card: #181818;
+  --border: #242424;
+  --gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-dim: rgba(201,168,76,0.10);
+  --cream: #f2ece0;
+  --gray: #5a5a5a;
+  --light-gray: #888;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Barlow', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.site-wrapper {
+  width: 100%;
+  max-width: 600px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* NAV */
+nav {
+  border-bottom: 1px solid var(--border);
+  background: rgba(8,8,8,0.97);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 58px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--cream);
+  text-decoration: none;
+}
+.nav-brand span { color: var(--gold); }
+.nav-links { display: flex; gap: 2px; }
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--light-gray);
+  text-decoration: none;
+  padding: 8px 11px;
+  border-radius: 2px;
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+
+/* HERO */
+.hero {
+  padding: 64px 24px 56px;
+  text-align: center;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  background: 
+    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 65%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.hero-scissors {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  display: block;
+  opacity: 0;
+  animation: fadeDown 0.6s 0.1s forwards;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 10vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 6px;
+  opacity: 0;
+  animation: fadeDown 0.6s 0.2s forwards;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+.hero-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeDown 0.6s 0.3s forwards;
+}
+.hero-desc {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--light-gray);
+  line-height: 1.7;
+  max-width: 440px;
+  margin: 0 auto 32px;
+  opacity: 0;
+  animation: fadeDown 0.6s 0.4s forwards;
+}
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeDown 0.6s 0.5s forwards;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* FEATURES BAR */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+}
+.feature {
+  padding: 24px 18px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.feature:last-child { border-right: none; }
+.feature-icon { font-size: 1.4rem; margin-bottom: 8px; }
+.feature-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.feature-desc {
+  font-size: 0.78rem;
+  color: var(--light-gray);
+  line-height: 1.5;
+}
+
+/* SECTION */
+.section { padding: 52px 24px; border-bottom: 1px solid var(--border); }
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+.gold-line {
+  width: 50px; height: 1px;
+  background: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+/* BARBERS */
+.barbers { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.barber-card {
+  background: var(--card);
+  padding: 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.barber-avatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--dark);
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.barber-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.barber-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.barber-stars { color: var(--gold); font-size: 0.7rem; margin-top: 4px; }
+
+/* HOURS */
+.hours-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+.hours-row {
+  background: var(--card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 20px;
+}
+.hours-day { font-size: 0.88rem; font-weight: 500; }
+.hours-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--gold);
+}
+.hours-closed {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gray);
+  letter-spacing: 0.1em;
+}
+.hours-today { background: rgba(201,168,76,0.06); border-left: 2px solid var(--gold); }
+
+/* LOCATION */
+.location-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 24px;
+}
+.location-map-placeholder {
+  width: 100%;
+  height: 140px;
+  background: var(--dark);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  font-size: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.location-map-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px),
+    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px);
+}
+.location-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.location-detail:last-child { margin-bottom: 0; }
+.loc-icon {
+  width: 28px; height: 28px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 2px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.loc-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.loc-value { font-size: 0.88rem; color: var(--cream); }
+
+/* CTA BANNER */
+.cta-banner {
+  padding: 52px 24px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  position: relative;
+}
+.cta-banner::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 120px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cta-banner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+.cta-banner h2 em { font-style: italic; color: var(--gold); }
+.cta-banner p {
+  font-size: 0.9rem;
+  color: var(--light-gray);
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+/* FOOTER */
+footer {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.footer-brand span { color: var(--gold); }
+.footer-info {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+.footer-sep { color: var(--border); }
+
+/* BUTTONS */
+.btn-gold {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.18s, box-shadow 0.2s;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.28); }
+.btn-outline {
+  display: inline-block;
+  background: transparent;
+  color: var(--gold);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 13px 26px;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid rgba(201,168,76,0.5);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.18s;
+}
+.btn-outline:hover { background: var(--gold-dim); transform: translateY(-1px); }
+
+/* highlight today */
+</style>
+</head>
+<body>
+<div class="site-wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a class="nav-brand" href="index.html">El <span>Maestro</span></a>
+      <div class="nav-links">
+        <a href="index.html" class="active">Inicio</a>
+        <a href="precios.html">Precios</a>
+        <a href="agenda.html">Agendar</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-scissors">✂</span>
+    <p class="hero-sub">Est. 2015 · Barbería de Lujo</p>
+    <h1>El Arte del<br><em>Corte Perfecto</em></h1>
+    <p class="hero-desc">Más de 10 años dando forma a estilos únicos. Barberos expertos, atención personalizada y el ambiente que mereces.</p>
+    <div class="hero-btns">
+      <a class="btn-gold" href="agenda.html">✦ Reservar Cita</a>
+      <a class="btn-outline" href="precios.html">Ver Precios</a>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">✦</div>
+      <div class="feature-title">Expertos</div>
+      <div class="feature-desc">Barberos certificados con años de experiencia</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⏱</div>
+      <div class="feature-title">Sin Esperas</div>
+      <div class="feature-desc">Agenda tu cita y llega directo a la silla</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✂</div>
+      <div class="feature-title">Calidad</div>
+      <div class="feature-desc">Productos premium, técnicas modernas y clásicas</div>
+    </div>
+  </div>
+
+  <!-- BARBERS -->
+  <section class="section">
+    <p class="section-label">Nuestro Equipo</p>
+    <h2 class="section-title">Los Maestros</h2>
+    <div class="gold-line"></div>
+    <div class="barbers">
+      <div class="barber-card">
+        <div class="barber-avatar">👨‍🦱</div>
+        <div>
+          <div class="barber-name">Carlos "El Maestro"</div>
+          <div class="barber-tag">Fundador · Especialista en Fade</div>
+          <div class="barber-stars">★★★★★ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 10+ años de experiencia</span></div>
+        </div>
+      </div>
+      <div class="barber-card">
+        <div class="barber-avatar">👨‍🦲</div>
+        <div>
+          <div class="barber-name">Miguel</div>
+          <div class="barber-tag">Barbero Senior · Estilos Clásicos</div>
+          <div class="barber-stars">★★★★★ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 7 años de experiencia</span></div>
+        </div>
+      </div>
+      <div class="barber-card">
+        <div class="barber-avatar">🧔</div>
+        <div>
+          <div class="barber-name">Diego</div>
+          <div class="barber-tag">Especialista en Barba</div>
+          <div class="barber-stars">★★★★☆ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 4 años de experiencia</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="section" style="padding-top:0">
+    <p class="section-label">Atención</p>
+    <h2 class="section-title">Horarios</h2>
+    <div class="gold-line"></div>
+    <div class="hours-grid" id="hoursGrid">
+      <div class="hours-row" data-day="1"><span class="hours-day">Lunes</span><span class="hours-time">9:00 — 20:00</span></div>
+      <div class="hours-row" data-day="2"><span class="hours-day">Martes</span><span class="hours-time">9:00 — 20:00</span></div>
+      <div class="hours-row" data-day="3"><span class="hours-day">Miércoles</span><span class="hours-time">9:00 — 20:00</span></div>
+      <div class="hours-row" data-day="4"><span class="hours-day">Jueves</span><span class="hours-time">9:00 — 20:00</span></div>
+      <div class="hours-row" data-day="5"><span class="hours-day">Viernes</span><span class="hours-time">9:00 — 21:00</span></div>
+      <div class="hours-row" data-day="6"><span class="hours-day">Sábado</span><span class="hours-time">9:00 — 18:00</span></div>
+      <div class="hours-row" data-day="0"><span class="hours-day">Domingo</span><span class="hours-closed">Cerrado</span></div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="section" style="padding-top:0">
+    <p class="section-label">Encuéntranos</p>
+    <h2 class="section-title">Ubicación</h2>
+    <div class="gold-line"></div>
+    <div class="location-card">
+      <div class="location-map-placeholder">📍</div>
+      <div class="location-detail">
+        <div class="loc-icon">📍</div>
+        <div>
+          <div class="loc-label">Dirección</div>
+          <div class="loc-value">Av. Reforma 245, Col. Centro<br>Ciudad de México, CDMX</div>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon">📞</div>
+        <div>
+          <div class="loc-label">Teléfono</div>
+          <div class="loc-value">+52 55 1234 5678</div>
+        </div>
+      </div>
+      <div class="location-detail">
+        <div class="loc-icon">✉</div>
+        <div>
+          <div class="loc-label">Email</div>
+          <div class="loc-value">citas@elmaestrobarberia.mx</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-banner">
+    <h2>¿Listo para tu<br>próximo <em>look</em>?</h2>
+    <p>Agenda tu cita en minutos. Sin llamadas, sin esperas.<br>Solo tú y el mejor corte de tu vida.</p>
+    <a class="btn-gold" href="agenda.html">✦ Agendar Ahora</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">El <span>Maestro</span> Barbería</div>
+    <div class="footer-info">
+      Av. Reforma 245 · CDMX<span class="footer-sep"> &nbsp;|&nbsp; </span>+52 55 1234 5678<br>
+      © 2025 El Maestro Barbería — Todos los derechos reservados
+    </div>
+  </footer>
+
+</div>
+<script>
+  // Highlight today's hours
+  const today = new Date().getDay();
+  const row = document.querySelector(`.hours-row[data-day="${today}"]`);
+  if (row) row.classList.add('hours-today');
+</script>
+</body>
+</html>
