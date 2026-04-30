@@ -135,22 +135,8 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .cdet-val a{color:var(--muted);text-decoration:none;transition:color .3s}
 .cdet-val a:hover{color:var(--gold)}
 
-/* FORM */
-.form-wrap{background:var(--dark);padding:60px 52px;position:relative}
-.form-wrap::before{content:'';position:absolute;inset:0;border:1px solid rgba(201,169,110,.18);pointer-events:none}
-.form-ttl{font-family:'Playfair Display',serif;font-size:26px;font-weight:300;color:var(--ivory);margin-bottom:6px}
-.form-sub{font-size:11px;color:rgba(242,235,224,.35);font-weight:300;letter-spacing:.06em;margin-bottom:40px}
-.fg{margin-bottom:22px}
-.fg label{display:block;font-size:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:300}
-.fg input,.fg select,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,169,110,.22);padding:11px 0;font-family:'Raleway',sans-serif;font-size:13px;font-weight:300;color:var(--ivory);outline:none;transition:border-color .3s}
-.fg select{background:var(--dark)}
-.fg select option{background:var(--charcoal)}
-.fg input::placeholder,.fg textarea::placeholder{color:rgba(242,235,224,.2)}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-bottom-color:var(--gold)}
-.fg textarea{resize:none;height:72px}
-.fgrow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.form-btn{width:100%;background:transparent;border:1px solid var(--gold);padding:16px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);cursor:pointer;margin-top:10px;transition:all .35s;font-weight:300}
-.form-btn:hover{background:var(--gold);color:var(--dark)}
+/* BOOKSY */
+.booksy-wrap{min-height:300px;display:flex;align-items:flex-start}
 
 /* MAP */
 .mapzone{height:380px;background:var(--ivory);display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border)}
@@ -272,7 +258,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
     padding:72px 24px;
     gap:48px;
   }
-  .form-wrap{padding:40px 28px}
   .fgrow{grid-template-columns:1fr}
 
   /* Map */
@@ -514,40 +499,8 @@ footer{background:var(--dark);padding:80px 70px 44px}
       </div>
     </div>
   </div>
-  <div class="form-wrap rv" id="reserva">
-    <h3 class="form-ttl">Reserva tu cita</h3>
-    <p class="form-sub">Confirmación en menos de 24 horas</p>
-    <div class="fgrow">
-      <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
-      <div class="fg"><label>Apellido</label><input type="text" placeholder="Tu apellido"></div>
-    </div>
-    <div class="fg"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
-    <div class="fg"><label>Teléfono</label><input type="tel" placeholder="+34 6XX XXX XXX"></div>
-    <div class="fg">
-      <label>Tratamiento</label>
-      <select>
-        <option value="">Selecciona un tratamiento</option>
-        <option>Tratamiento Facial</option>
-        <option>Ritual Corporal</option>
-        <option>Masaje de Lujo</option>
-        <option>Manicura &amp; Pedicura</option>
-        <option>Depilación Láser</option>
-        <option>Pack Completo</option>
-      </select>
-    </div>
-    <div class="fgrow">
-      <div class="fg"><label>Fecha</label><input type="date"></div>
-      <div class="fg">
-        <label>Hora</label>
-        <select>
-          <option>09:00</option><option>10:00</option><option>11:00</option>
-          <option>12:00</option><option>16:00</option><option>17:00</option>
-          <option>18:00</option><option>19:00</option>
-        </select>
-      </div>
-    </div>
-    <div class="fg"><label>Notas</label><textarea placeholder="Alergias, preferencias o cualquier información relevante..."></textarea></div>
-    <button class="form-btn" id="formBtn">Solicitar cita</button>
+  <div class="booksy-wrap rv" id="reserva">
+    <script type="text/javascript" src="https://booksy.com/widget/code.js?id=178988&country=es&lang=es"></script>
   </div>
 </section>
 
@@ -624,11 +577,6 @@ const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*90);obs.unobserve(e.target)}});
 },{threshold:.08});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
-// Form
-document.getElementById('formBtn').addEventListener('click',function(){
-  this.textContent='✓ Solicitud enviada — Te confirmamos pronto';
-  this.style.cssText+='opacity:.5;pointer-events:none';
-});
 // PWA Service Worker
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
