@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ma Chère — Estética Integral · Barcelona</title>
-<meta name="description" content="Centro de estética integral en Les Corts. Tratamientos faciales y corporales rituales corporales, micropigmentación, pestañas, aparatologia, depilación láser, peluquería...">
+<title>Ma Chère — Esthétique de Luxe · Barcelona</title>
+<meta name="description" content="Centro de estética de lujo en Barcelona. Tratamientos faciales, rituales corporales, masajes y más. Reserva tu cita online.">
 <meta name="theme-color" content="#1A1714">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -58,12 +58,6 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--cream) 0%,transparent 30%)}
 .hero-badge{position:absolute;bottom:60px;right:60px;width:110px;height:110px;border:1px solid rgba(201,169,110,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;animation:spin 18s linear infinite}
 .hero-badge-text{font-size:8px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.7;font-weight:300}
-
-/* TICKER */
-.ticker{background:var(--dark);padding:16px 0;overflow:hidden}
-.ticker-inner{display:inline-flex;animation:ticker 28s linear infinite}
-.tick-item{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding:0 36px;font-weight:300}
-.tick-sep{color:rgba(201,169,110,.35);padding:0 4px}
 
 /* ABOUT */
 .about{padding:150px 70px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
@@ -123,22 +117,6 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .step-i{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--gold);width:18px;flex-shrink:0;padding-top:4px}
 .step-body h4{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ivory);margin-bottom:6px}
 .step-body p{font-size:12px;color:rgba(242,235,224,.4);line-height:1.75;font-weight:300}
-
-/* TEAM */
-.team{padding:150px 70px}
-.team-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px}
-.team-title{font-family:'Playfair Display',serif;font-size:clamp(36px,3.8vw,56px);font-weight:300;color:var(--dark);line-height:1.1}
-.team-title em{font-style:italic;color:var(--gold)}
-.team-more{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:300;transition:opacity .3s}
-.team-more:hover{opacity:.6}
-.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
-.member{overflow:hidden;position:relative}
-.member-img{aspect-ratio:3/4;overflow:hidden;background:var(--ivory)}
-.member-img img{width:100%;height:100%;object-fit:cover;transition:all .7s ease;filter:grayscale(25%) brightness(.9)}
-.member:hover .member-img img{filter:grayscale(0%) brightness(1);transform:scale(1.04)}
-.member-info{padding:24px 20px}
-.member-info h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--dark);margin-bottom:4px}
-.member-info span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300}
 
 /* TESTIMONIALS */
 .testi{background:var(--ivory);padding:130px 70px;text-align:center}
@@ -219,23 +197,118 @@ footer{background:var(--dark);padding:80px 70px 44px}
 /* ANIMATIONS */
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @keyframes zoom{from{transform:scale(1.06)}to{transform:scale(1)}}
-@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* RESPONSIVE */
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────── */
+
+/* Tablet & small desktop */
 @media(max-width:1100px){
-  nav{padding:24px 32px}nav.stuck{padding:16px 32px}
-  .hero{grid-template-columns:1fr}.hero-right{display:none}
-  .hero-left{padding:120px 40px 80px}
-  .about,.ritual-inner,.contact{grid-template-columns:1fr;gap:60px;padding:80px 32px}
-  .services{padding:0 32px 80px}
-  .services-grid{grid-template-columns:1fr 1fr}
-  .team{padding:80px 32px}.team-grid{grid-template-columns:1fr 1fr}
-  .testi{padding:80px 32px}.testi-grid{grid-template-columns:1fr}
-  .gallery{grid-template-columns:1fr;height:auto}
-  .gallery-cell{height:260px}
-  .foot-top{grid-template-columns:1fr 1fr}
+  nav{padding:24px 40px}
+  nav.stuck{padding:14px 40px}
+  .nav-links{gap:28px}
+  .hero-left{padding:110px 56px 80px}
+  .about{padding:100px 40px;gap:60px}
+  .services{padding:0 40px 100px}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .srv:nth-child(3n){border-right:1px solid var(--border)}
+  .srv:nth-child(2n){border-right:none}
+  .srv:nth-child(5),.srv:nth-child(6){border-bottom:none}
+  .srv:nth-child(4){border-bottom:1px solid var(--border)}
+  .ritual{padding:100px 40px}
+  .ritual-inner{gap:60px}
+  .testi{padding:100px 40px}
+  .contact{padding:100px 40px;gap:60px}
+  footer{padding:60px 40px 36px}
+}
+
+/* Mobile */
+@media(max-width:720px){
+  /* Nav */
+  nav{padding:20px 24px}
+  nav.stuck{padding:14px 24px}
   .nav-links{display:none}
+  .nav-cta{padding:10px 18px;font-size:8px}
+
+  /* Hero: single column, image as background */
+  .hero{
+    grid-template-columns:1fr;
+    height:100svh;
+    position:relative;
+  }
+  .hero-right{
+    position:absolute;
+    inset:0;
+    z-index:0;
+  }
+  .hero-overlay{
+    background:linear-gradient(to bottom,rgba(250,246,240,.82) 0%,rgba(250,246,240,.65) 60%,rgba(250,246,240,.85) 100%);
+  }
+  .hero-left{
+    padding:100px 24px 60px;
+    z-index:2;
+    position:relative;
+  }
+  .hero-body{max-width:100%}
+  .hero-badge{width:80px;height:80px;bottom:28px;right:24px}
+  .hero-badge-text{font-size:7px}
+
+  /* About */
+  .about{
+    grid-template-columns:1fr;
+    padding:72px 24px;
+    gap:48px;
+  }
+  .about-nums{flex-direction:column;gap:0}
+  .num-item+.num-item{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:24px;margin-top:24px}
+
+  /* Services */
+  .services{padding:0 24px 72px}
+  .services-grid{
+    grid-template-columns:1fr;
+    border:none;
+    gap:2px;
+  }
+  .srv{border:1px solid var(--border) !important;border-bottom:none !important}
+  .srv:last-child{border-bottom:1px solid var(--border) !important}
+  .srv{padding:36px 28px}
+
+  /* Gallery */
+  .gallery{grid-template-columns:1fr;height:auto}
+  .gallery-cell{height:220px}
+
+  /* Ritual */
+  .ritual{padding:72px 24px}
+  .ritual-inner{grid-template-columns:1fr;gap:48px}
+
+  /* Testimonials */
+  .testi{padding:72px 24px}
+  .testi-grid{grid-template-columns:1fr;gap:24px}
+  .tcard{padding:32px 28px}
+
+  /* Contact */
+  .contact{
+    grid-template-columns:1fr;
+    padding:72px 24px;
+    gap:48px;
+  }
+  .form-wrap{padding:40px 28px}
+  .fgrow{grid-template-columns:1fr}
+
+  /* Map */
+  .mapzone{height:260px}
+
+  /* Footer */
+  footer{padding:56px 24px 32px}
+  .foot-top{
+    grid-template-columns:1fr;
+    gap:40px;
+    padding-bottom:40px;
+  }
+  .foot-bot{
+    flex-direction:column;
+    gap:12px;
+    text-align:center;
+  }
 }
 </style>
 </head>
@@ -247,7 +320,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#filosofia">Filosofía</a></li>
-    <li><a href="#equipo">Equipo</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="#reserva" class="nav-cta">Reservar cita</a>
@@ -256,10 +328,10 @@ footer{background:var(--dark);padding:80px 70px 44px}
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow">ESTÉTICA INTEGRAL · LES CORTS · BARCELONA</p>
+    <p class="hero-eyebrow">Barcelona · Esthétique de Luxe · Desde 2012</p>
     <h1 class="hero-title">
-      Rituales<br>
-      <em>de Belleza.</em>
+      Belleza que<br>
+      <em>te pertenece.</em>
     </h1>
     <p class="hero-body">En Ma Chère cada tratamiento es un ritual íntimo, diseñado para revelarte en tu versión más luminosa. Bienvenida a tu santuario en Barcelona.</p>
     <div class="hero-btns">
@@ -277,29 +349,11 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </div>
 </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="tick-item">Tratamientos Faciales</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Rituales Corporales</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Masajes de Lujo</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Manicura &amp; Pedicura</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Depilación Láser</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Alta Cosmética</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Tratamientos Faciales</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Rituales Corporales</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Masajes de Lujo</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Manicura &amp; Pedicura</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Depilación Láser</span><span class="tick-sep">✦</span>
-    <span class="tick-item">Alta Cosmética</span><span class="tick-sep">✦</span>
-  </div>
-</div>
-
 <!-- ABOUT -->
 <section class="about" id="filosofia">
   <div class="about-img-wrap rv">
     <!-- ★ REEMPLAZA con foto del espacio o ambientación -->
-    <img class="about-img" src="portada.png" alt="Espacio Ma Chère Barcelona">
+    <img class="about-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=85" alt="Espacio Ma Chère Barcelona">
     <div class="about-frame"></div>
   </div>
   <div class="rv">
@@ -307,7 +361,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
     <h2 class="about-title">El arte del<br><em>cuidado consciente.</em></h2>
     <div class="about-body">
       <p>En Ma Chère creemos que la belleza no se impone, se revela. Cada visita es un espacio de calma, precisión y placer donde trabajamos con los mejores productos y técnicas del mundo de la estética.</p>
-      <p>Nuestro centro, en el corazón de Les Corts, es un refugio donde el tiempo se detiene y tú eres la única protagonista. Acompañamos a mujeres que se merecen lo mejor.</p>
+      <p>Nuestro centro, en el corazón de Barcelona, es un refugio donde el tiempo se detiene y tú eres la única protagonista. Desde 2012 acompañando a mujeres que se merecen lo mejor.</p>
     </div>
     <div class="about-nums">
       <div class="num-item">
@@ -405,68 +459,32 @@ footer{background:var(--dark);padding:80px 70px 44px}
     </div>
     <div class="ritual-steps rv">
       <div class="step">
-        <div class="step-i">·</div>
+        <div class="step-i">i.</div>
         <div class="step-body">
           <h4>Bienvenida &amp; Diagnóstico</h4>
           <p>Recepción con infusión de bienvenida y análisis personalizado de tu piel y necesidades específicas.</p>
         </div>
       </div>
       <div class="step">
-        <div class="step-i">·</div>
+        <div class="step-i">ii.</div>
         <div class="step-body">
           <h4>Protocolo Personalizado</h4>
           <p>Tratamiento adaptado exclusivamente a ti con los productos y técnicas más adecuados para cada momento.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section class="team" id="equipo">
-  <div class="team-top rv">
-    <div>
-      <p class="section-tag">Nuestro equipo</p>
-      <h2 class="team-title">Expertas en<br><em>tu belleza.</em></h2>
-    </div>
-    <a href="#contacto" class="team-more">Conocer el equipo →</a>
-  </div>
-  <div class="team-grid rv">
-    <div class="member">
-      <div class="member-img">
-        <!-- ★ REEMPLAZA con fotos reales de tu equipo -->
-        <img src="https://images.unsplash.com/photo-1607008829749-c0f284a49fc4?w=500&q=85" alt="Sophie Leclerc">
+      <div class="step">
+        <div class="step-i">iii.</div>
+        <div class="step-body">
+          <h4>Ritual de Finalización</h4>
+          <p>Acabado con masaje facial y protocolo de hidratación para potenciar y prolongar los resultados.</p>
+        </div>
       </div>
-      <div class="member-info">
-        <h3>Sophie Leclerc</h3>
-        <span>Directora &amp; Senior</span>
-      </div>
-    </div>
-    <div class="member">
-      <div class="member-img">
-        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500&q=85" alt="Marta Vidal">
-      </div>
-      <div class="member-info">
-        <h3>Marta Vidal</h3>
-        <span>Especialista Facial</span>
-      </div>
-    </div>
-    <div class="member">
-      <div class="member-img">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=85" alt="Ana Moreno">
-      </div>
-      <div class="member-info">
-        <h3>Ana Moreno</h3>
-        <span>Terapeuta Corporal</span>
-      </div>
-    </div>
-    <div class="member">
-      <div class="member-img">
-        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&q=85" alt="Laia Puig">
-      </div>
-      <div class="member-info">
-        <h3>Laia Puig</h3>
-        <span>Nail Artist &amp; Láser</span>
+      <div class="step">
+        <div class="step-i">iv.</div>
+        <div class="step-body">
+          <h4>Seguimiento &amp; Plan de Cuidado</h4>
+          <p>Rutina personalizada para el hogar y próximas visitas recomendadas para mantener tu mejor versión.</p>
+        </div>
       </div>
     </div>
   </div>
