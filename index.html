@@ -40,7 +40,7 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .nav-cta:hover{background:var(--gold);color:var(--cream)}
 
 /* HERO */
-.hero{height:100vh;display:grid;grid-template-columns:55% 45%;position:relative;overflow:hidden}
+.hero{height:100vh;display:flex;position:relative;overflow:hidden;background:var(--cream)}
 .hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px 80px;position:relative;z-index:2}
 .hero-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;font-weight:300;opacity:0;animation:up .9s ease .3s forwards}
 .hero-title{font-family:'Playfair Display',serif;font-size:clamp(56px,6.5vw,88px);font-weight:300;line-height:1.05;color:var(--dark);margin-bottom:36px;opacity:0;animation:up .9s ease .5s forwards}
@@ -53,9 +53,6 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .btn-secondary::after{content:'';width:40px;height:1px;background:var(--dark);transition:width .35s}
 .btn-secondary:hover{gap:22px;color:var(--gold)}
 .btn-secondary:hover::after{width:52px;background:var(--gold)}
-.hero-right{position:relative;overflow:hidden}
-.hero-img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:zoom 10s ease forwards;filter:brightness(.45) saturate(.7)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(250,246,240,.92) 0%,rgba(250,246,240,.7) 50%,rgba(250,246,240,.2) 100%)}
 /* ABOUT */
 .about{padding:150px 70px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
 .section-tag{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:28px}
@@ -227,14 +224,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
     height:100svh;
     position:relative;
   }
-  .hero-right{
-    position:absolute;
-    inset:0;
-    z-index:0;
-  }
-  .hero-overlay{
-    background:linear-gradient(to bottom,rgba(250,246,240,.93) 0%,rgba(250,246,240,.80) 60%,rgba(250,246,240,.90) 100%);
-  }
   .hero-left{
     padding:100px 24px 60px;
     z-index:2;
@@ -331,12 +320,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
       <a href="#filosofia" class="btn-secondary">Nuestra historia</a>
     </div>
   </div>
-  <div class="hero-right">
-    <!-- ★ REEMPLAZA src con tu imagen principal de portada -->
-    <img class="hero-img" src="portada.png" alt="Ma Chère — Centro de estética Barcelona">
-    <div class="hero-overlay"></div>
 
-  </div>
 </section>
 
 <!-- ABOUT -->
