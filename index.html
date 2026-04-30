@@ -56,20 +56,12 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .hero-right{position:relative;overflow:hidden}
 .hero-img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:zoom 10s ease forwards;filter:brightness(.88) saturate(.9)}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--cream) 0%,transparent 30%)}
-.hero-badge{position:absolute;bottom:60px;right:60px;width:110px;height:110px;border:1px solid rgba(201,169,110,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;animation:spin 18s linear infinite}
-.hero-badge-text{font-size:8px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.7;font-weight:300}
-
 /* ABOUT */
 .about{padding:150px 70px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
 .section-tag{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:28px}
 .about-title{font-family:'Playfair Display',serif;font-size:clamp(36px,3.8vw,58px);font-weight:300;line-height:1.15;color:var(--dark);margin-bottom:36px}
 .about-title em{font-style:italic;color:var(--gold)}
 .about-body p{font-size:13px;color:var(--muted);line-height:1.9;font-weight:300;letter-spacing:.03em;margin-bottom:20px}
-.about-nums{display:flex;gap:0;margin-top:56px;border-top:1px solid var(--border)}
-.num-item{flex:1;padding:36px 0 0}
-.num-item+.num-item{border-left:1px solid var(--border);padding-left:32px}
-.num-val{font-family:'Playfair Display',serif;font-size:52px;font-weight:300;color:var(--gold);line-height:1}
-.num-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:300;margin-top:8px}
 .about-img-wrap{position:relative}
 .about-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
 .about-frame{position:absolute;bottom:-28px;left:-28px;width:55%;height:55%;border:1px solid var(--gold);z-index:-1;opacity:.5}
@@ -341,11 +333,9 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </div>
   <div class="hero-right">
     <!-- ★ REEMPLAZA src con tu imagen principal de portada -->
-    <img class="hero-img" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1400&q=85" alt="Ma Chère — Centro de estética Barcelona">
+    <img class="hero-img" src="portada.png" alt="Ma Chère — Centro de estética Barcelona">
     <div class="hero-overlay"></div>
-    <div class="hero-badge">
-      <div class="hero-badge-text">Lujo&nbsp;·&nbsp;Ritual<br>Belleza&nbsp;·&nbsp;Cuidado</div>
-    </div>
+
   </div>
 </section>
 
@@ -363,20 +353,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
       <p>En Ma Chère creemos que la belleza no se impone, se revela. Cada visita es un espacio de calma, precisión y placer donde trabajamos con los mejores productos y técnicas del mundo de la estética.</p>
       <p>Nuestro centro, en el corazón de Barcelona, es un refugio donde el tiempo se detiene y tú eres la única protagonista. Desde 2012 acompañando a mujeres que se merecen lo mejor.</p>
     </div>
-    <div class="about-nums">
-      <div class="num-item">
-        <div class="num-val">12</div>
-        <div class="num-label">Años de experiencia</div>
-      </div>
-      <div class="num-item">
-        <div class="num-val">4k+</div>
-        <div class="num-label">Clientas felices</div>
-      </div>
-      <div class="num-item">
-        <div class="num-val">98%</div>
-        <div class="num-label">Satisfacción</div>
-      </div>
-    </div>
+
   </div>
 </section>
 
