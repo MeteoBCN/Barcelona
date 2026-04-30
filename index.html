@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ma Chère — Esthétique de Luxe · Barcelona</title>
+<meta name="description" content="Centro de estética de lujo en Barcelona. Tratamientos faciales, rituales corporales, masajes y más. Reserva tu cita online.">
+<meta name="theme-color" content="#1A1714">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ma Chère">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=192&q=85">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -19,11 +26,7 @@
   --border:rgba(201,169,110,0.2);
 }
 html{scroll-behavior:smooth}
-body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;cursor:none}
-
-/* CURSOR */
-.cur-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;transform:translate(-50%,-50%);transition:transform .15s;pointer-events:none;z-index:9999}
-.cur-ring{width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;position:fixed;transform:translate(-50%,-50%);transition:all .22s cubic-bezier(.25,.46,.45,.94);opacity:.5;pointer-events:none;z-index:9998}
+body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:36px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s}
@@ -172,14 +175,14 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .form-sub{font-size:11px;color:rgba(242,235,224,.35);font-weight:300;letter-spacing:.06em;margin-bottom:40px}
 .fg{margin-bottom:22px}
 .fg label{display:block;font-size:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:300}
-.fg input,.fg select,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,169,110,.22);padding:11px 0;font-family:'Raleway',sans-serif;font-size:13px;font-weight:300;color:var(--ivory);outline:none;transition:border-color .3s;cursor:none}
+.fg input,.fg select,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,169,110,.22);padding:11px 0;font-family:'Raleway',sans-serif;font-size:13px;font-weight:300;color:var(--ivory);outline:none;transition:border-color .3s}
 .fg select{background:var(--dark)}
 .fg select option{background:var(--charcoal)}
 .fg input::placeholder,.fg textarea::placeholder{color:rgba(242,235,224,.2)}
 .fg input:focus,.fg select:focus,.fg textarea:focus{border-bottom-color:var(--gold)}
 .fg textarea{resize:none;height:72px}
 .fgrow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.form-btn{width:100%;background:transparent;border:1px solid var(--gold);padding:16px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);cursor:none;margin-top:10px;transition:all .35s;font-weight:300}
+.form-btn{width:100%;background:transparent;border:1px solid var(--gold);padding:16px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);cursor:pointer;margin-top:10px;transition:all .35s;font-weight:300}
 .form-btn:hover{background:var(--gold);color:var(--dark)}
 
 /* MAP */
@@ -233,14 +236,10 @@ footer{background:var(--dark);padding:80px 70px 44px}
   .gallery-cell{height:260px}
   .foot-top{grid-template-columns:1fr 1fr}
   .nav-links{display:none}
-  body{cursor:auto}.cur-dot,.cur-ring{display:none}
 }
 </style>
 </head>
 <body>
-
-<div class="cur-dot" id="dot"></div>
-<div class="cur-ring" id="ring"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -668,16 +667,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </footer>
 
 <script>
-// Cursor
-const dot=document.getElementById('dot'),ring=document.getElementById('ring');
-document.addEventListener('mousemove',e=>{
-  dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
-  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'},90);
-});
-document.querySelectorAll('a,button,.srv,.member').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.9)';dot.style.transform='translate(-50%,-50%) scale(0.4)'});
-  el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';dot.style.transform='translate(-50%,-50%) scale(1)'});
-});
 // Sticky nav
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>50));
@@ -691,6 +680,12 @@ document.getElementById('formBtn').addEventListener('click',function(){
   this.textContent='✓ Solicitud enviada — Te confirmamos pronto';
   this.style.cssText+='opacity:.5;pointer-events:none';
 });
+// PWA Service Worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
