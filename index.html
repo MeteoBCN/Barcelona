@@ -3,552 +3,694 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Maestro — Barbería</title>
+<title>Ma Chère — Esthétique de Luxe · Barcelona</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:wght@400;500&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black: #080808;
-  --dark: #111;
-  --card: #181818;
-  --border: #242424;
-  --gold: #c9a84c;
-  --gold-light: #e8c96a;
-  --gold-dim: rgba(201,168,76,0.10);
-  --cream: #f2ece0;
-  --gray: #5a5a5a;
-  --light-gray: #888;
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FAF6F0;
+  --ivory:#F2EBE0;
+  --gold:#C9A96E;
+  --gold2:#A07840;
+  --dark:#1A1714;
+  --charcoal:#2D2926;
+  --muted:#7A736A;
+  --border:rgba(201,169,110,0.2);
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden;cursor:none}
 
-body {
-  background: var(--black);
-  color: var(--cream);
-  font-family: 'Barlow', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.site-wrapper {
-  width: 100%;
-  max-width: 600px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+/* CURSOR */
+.cur-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;position:fixed;transform:translate(-50%,-50%);transition:transform .15s;pointer-events:none;z-index:9999}
+.cur-ring{width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;position:fixed;transform:translate(-50%,-50%);transition:all .22s cubic-bezier(.25,.46,.45,.94);opacity:.5;pointer-events:none;z-index:9998}
 
 /* NAV */
-nav {
-  border-bottom: 1px solid var(--border);
-  background: rgba(8,8,8,0.97);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  height: 58px;
-}
-.nav-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: var(--cream);
-  text-decoration: none;
-}
-.nav-brand span { color: var(--gold); }
-.nav-links { display: flex; gap: 2px; }
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--light-gray);
-  text-decoration: none;
-  padding: 8px 11px;
-  border-radius: 2px;
-  transition: color 0.2s, background 0.2s;
-}
-.nav-links a:hover, .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:36px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s}
+nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;letter-spacing:.18em;text-decoration:none;color:var(--dark)}
+.logo span{font-style:italic;color:var(--gold)}
+.nav-links{display:flex;gap:44px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:300;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{font-size:9px;letter-spacing:.24em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:11px 26px;text-decoration:none;font-weight:300;transition:all .3s}
+.nav-cta:hover{background:var(--gold);color:var(--cream)}
 
 /* HERO */
-.hero {
-  padding: 64px 24px 56px;
-  text-align: center;
-  position: relative;
-  border-bottom: 1px solid var(--border);
-  background: 
-    radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 65%);
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.hero-scissors {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  display: block;
-  opacity: 0;
-  animation: fadeDown 0.6s 0.1s forwards;
-}
-.hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.4rem, 10vw, 3.2rem);
-  font-weight: 900;
-  line-height: 1.05;
-  margin-bottom: 6px;
-  opacity: 0;
-  animation: fadeDown 0.6s 0.2s forwards;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold);
-}
-.hero-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-  opacity: 0;
-  animation: fadeDown 0.6s 0.3s forwards;
-}
-.hero-desc {
-  font-size: 0.95rem;
-  font-weight: 300;
-  color: var(--light-gray);
-  line-height: 1.7;
-  max-width: 440px;
-  margin: 0 auto 32px;
-  opacity: 0;
-  animation: fadeDown 0.6s 0.4s forwards;
-}
-.hero-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeDown 0.6s 0.5s forwards;
-}
-@keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+.hero{height:100vh;display:grid;grid-template-columns:55% 45%;position:relative;overflow:hidden}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px 80px;position:relative;z-index:2}
+.hero-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;font-weight:300;opacity:0;animation:up .9s ease .3s forwards}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(56px,6.5vw,88px);font-weight:300;line-height:1.05;color:var(--dark);margin-bottom:36px;opacity:0;animation:up .9s ease .5s forwards}
+.hero-title em{display:block;font-style:italic;color:var(--gold)}
+.hero-body{font-size:13px;color:var(--muted);line-height:1.9;font-weight:300;max-width:380px;margin-bottom:56px;letter-spacing:.04em;opacity:0;animation:up .9s ease .7s forwards}
+.hero-btns{display:flex;gap:20px;opacity:0;animation:up .9s ease .9s forwards}
+.btn-primary{font-size:9px;letter-spacing:.26em;text-transform:uppercase;background:var(--gold);color:var(--cream);padding:15px 38px;text-decoration:none;font-weight:400;transition:all .35s}
+.btn-primary:hover{background:var(--gold2)}
+.btn-secondary{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--dark);padding:15px 0;text-decoration:none;font-weight:300;display:flex;align-items:center;gap:14px;transition:gap .35s}
+.btn-secondary::after{content:'';width:40px;height:1px;background:var(--dark);transition:width .35s}
+.btn-secondary:hover{gap:22px;color:var(--gold)}
+.btn-secondary:hover::after{width:52px;background:var(--gold)}
+.hero-right{position:relative;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);animation:zoom 10s ease forwards;filter:brightness(.88) saturate(.9)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,var(--cream) 0%,transparent 30%)}
+.hero-badge{position:absolute;bottom:60px;right:60px;width:110px;height:110px;border:1px solid rgba(201,169,110,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:3;animation:spin 18s linear infinite}
+.hero-badge-text{font-size:8px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);text-align:center;line-height:1.7;font-weight:300}
 
-/* FEATURES BAR */
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid var(--border);
-}
-.feature {
-  padding: 24px 18px;
-  text-align: center;
-  border-right: 1px solid var(--border);
-}
-.feature:last-child { border-right: none; }
-.feature-icon { font-size: 1.4rem; margin-bottom: 8px; }
-.feature-title {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 4px;
-}
-.feature-desc {
-  font-size: 0.78rem;
-  color: var(--light-gray);
-  line-height: 1.5;
-}
+/* TICKER */
+.ticker{background:var(--dark);padding:16px 0;overflow:hidden}
+.ticker-inner{display:inline-flex;animation:ticker 28s linear infinite}
+.tick-item{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);padding:0 36px;font-weight:300}
+.tick-sep{color:rgba(201,169,110,.35);padding:0 4px}
 
-/* SECTION */
-.section { padding: 52px 24px; border-bottom: 1px solid var(--border); }
-.section-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 8px;
-}
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.7rem;
-  font-weight: 900;
-  margin-bottom: 20px;
-}
-.gold-line {
-  width: 50px; height: 1px;
-  background: var(--gold);
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
+/* ABOUT */
+.about{padding:150px 70px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.section-tag{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:28px}
+.about-title{font-family:'Playfair Display',serif;font-size:clamp(36px,3.8vw,58px);font-weight:300;line-height:1.15;color:var(--dark);margin-bottom:36px}
+.about-title em{font-style:italic;color:var(--gold)}
+.about-body p{font-size:13px;color:var(--muted);line-height:1.9;font-weight:300;letter-spacing:.03em;margin-bottom:20px}
+.about-nums{display:flex;gap:0;margin-top:56px;border-top:1px solid var(--border)}
+.num-item{flex:1;padding:36px 0 0}
+.num-item+.num-item{border-left:1px solid var(--border);padding-left:32px}
+.num-val{font-family:'Playfair Display',serif;font-size:52px;font-weight:300;color:var(--gold);line-height:1}
+.num-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:300;margin-top:8px}
+.about-img-wrap{position:relative}
+.about-img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block}
+.about-frame{position:absolute;bottom:-28px;left:-28px;width:55%;height:55%;border:1px solid var(--gold);z-index:-1;opacity:.5}
 
-/* BARBERS */
-.barbers { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
-.barber-card {
-  background: var(--card);
-  padding: 20px 22px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-.barber-avatar {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  background: var(--dark);
-  border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-}
-.barber-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 3px;
-}
-.barber-tag {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-.barber-stars { color: var(--gold); font-size: 0.7rem; margin-top: 4px; }
+/* SERVICES */
+.services{padding:0 70px 150px}
+.services-head{text-align:center;margin-bottom:72px}
+.services-title{font-family:'Playfair Display',serif;font-size:clamp(38px,4.2vw,62px);font-weight:300;color:var(--dark);line-height:1.1}
+.services-title em{font-style:italic;color:var(--gold)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border)}
+.srv{padding:52px 44px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background .4s}
+.srv:nth-child(3n){border-right:none}
+.srv:nth-child(4),.srv:nth-child(5),.srv:nth-child(6){border-bottom:none}
+.srv:hover{background:var(--ivory)}
+.srv::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.srv:hover::after{transform:scaleX(1)}
+.srv-n{font-family:'Playfair Display',serif;font-size:72px;font-weight:300;color:rgba(201,169,110,.08);line-height:.8;margin-bottom:28px;font-style:italic}
+.srv h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:14px}
+.srv p{font-size:12px;color:var(--muted);line-height:1.85;font-weight:300;margin-bottom:28px}
+.srv-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold);font-weight:300}
+.srv-price small{font-family:'Raleway',sans-serif;font-size:10px;color:var(--muted);font-weight:300;letter-spacing:.1em;margin-left:6px}
+.srv-link{display:inline-flex;align-items:center;gap:10px;margin-top:24px;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:300;transition:gap .3s}
+.srv-link:hover{gap:18px}
+.srv-link::after{content:'→'}
 
-/* HOURS */
-.hours-grid { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
-.hours-row {
-  background: var(--card);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 13px 20px;
-}
-.hours-day { font-size: 0.88rem; font-weight: 500; }
-.hours-time {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--gold);
-}
-.hours-closed {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--gray);
-  letter-spacing: 0.1em;
-}
-.hours-today { background: rgba(201,168,76,0.06); border-left: 2px solid var(--gold); }
+/* GALLERY BAND */
+.gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
+.gallery-cell{overflow:hidden;position:relative}
+.gallery-cell img{width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.88);transition:all .8s ease}
+.gallery-cell:hover img{filter:saturate(1) brightness(.96);transform:scale(1.05)}
+.gallery-cap{position:absolute;bottom:24px;left:24px;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.65);font-weight:300}
 
-/* LOCATION */
-.location-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 24px;
-}
-.location-map-placeholder {
-  width: 100%;
-  height: 140px;
-  background: var(--dark);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
-  font-size: 2rem;
-  position: relative;
-  overflow: hidden;
-}
-.location-map-placeholder::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    repeating-linear-gradient(0deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px),
-    repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.02) 30px, rgba(255,255,255,0.02) 31px);
-}
-.location-detail {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.location-detail:last-child { margin-bottom: 0; }
-.loc-icon {
-  width: 28px; height: 28px;
-  background: var(--gold-dim);
-  border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 2px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
-  margin-top: 1px;
-}
-.loc-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 2px;
-}
-.loc-value { font-size: 0.88rem; color: var(--cream); }
+/* RITUAL */
+.ritual{background:var(--dark);padding:150px 70px;position:relative;overflow:hidden}
+.ritual::before{content:'';position:absolute;top:-180px;right:-180px;width:520px;height:520px;border-radius:50%;border:1px solid rgba(201,169,110,.08)}
+.ritual::after{content:'';position:absolute;bottom:-80px;left:-80px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(201,169,110,.06)}
+.ritual-inner{display:grid;grid-template-columns:1fr 1fr;gap:110px;align-items:start;position:relative;z-index:1}
+.ritual .section-tag{color:rgba(201,169,110,.65)}
+.ritual-title{font-family:'Playfair Display',serif;font-size:clamp(38px,4vw,60px);font-weight:300;color:var(--ivory);line-height:1.1;margin-bottom:32px}
+.ritual-title em{font-style:italic;color:var(--gold)}
+.ritual-body{font-size:13px;color:rgba(242,235,224,.45);line-height:1.9;font-weight:300;margin-bottom:52px}
+.ritual-steps{display:flex;flex-direction:column}
+.step{display:flex;gap:28px;padding:28px 0;border-bottom:1px solid rgba(201,169,110,.1);align-items:flex-start}
+.step:first-child{border-top:1px solid rgba(201,169,110,.1)}
+.step-i{font-family:'Playfair Display',serif;font-size:12px;font-style:italic;color:var(--gold);width:18px;flex-shrink:0;padding-top:4px}
+.step-body h4{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--ivory);margin-bottom:6px}
+.step-body p{font-size:12px;color:rgba(242,235,224,.4);line-height:1.75;font-weight:300}
 
-/* CTA BANNER */
-.cta-banner {
-  padding: 52px 24px;
-  text-align: center;
-  background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.07) 0%, transparent 70%);
-  position: relative;
-}
-.cta-banner::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 120px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.cta-banner h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.9rem;
-  font-weight: 900;
-  margin-bottom: 12px;
-}
-.cta-banner h2 em { font-style: italic; color: var(--gold); }
-.cta-banner p {
-  font-size: 0.9rem;
-  color: var(--light-gray);
-  margin-bottom: 28px;
-  line-height: 1.6;
-}
+/* TEAM */
+.team{padding:150px 70px}
+.team-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:64px}
+.team-title{font-family:'Playfair Display',serif;font-size:clamp(36px,3.8vw,56px);font-weight:300;color:var(--dark);line-height:1.1}
+.team-title em{font-style:italic;color:var(--gold)}
+.team-more{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-decoration:none;font-weight:300;transition:opacity .3s}
+.team-more:hover{opacity:.6}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.member{overflow:hidden;position:relative}
+.member-img{aspect-ratio:3/4;overflow:hidden;background:var(--ivory)}
+.member-img img{width:100%;height:100%;object-fit:cover;transition:all .7s ease;filter:grayscale(25%) brightness(.9)}
+.member:hover .member-img img{filter:grayscale(0%) brightness(1);transform:scale(1.04)}
+.member-info{padding:24px 20px}
+.member-info h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;color:var(--dark);margin-bottom:4px}
+.member-info span{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:300}
+
+/* TESTIMONIALS */
+.testi{background:var(--ivory);padding:130px 70px;text-align:center}
+.testi-title{font-family:'Playfair Display',serif;font-size:clamp(36px,4vw,58px);font-weight:300;color:var(--dark);margin-bottom:72px;line-height:1.1}
+.testi-title em{font-style:italic;color:var(--gold)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;text-align:left}
+.tcard{background:var(--cream);padding:44px;border:1px solid var(--border);position:relative}
+.qmark{font-family:'Playfair Display',serif;font-size:88px;color:var(--gold);opacity:.15;position:absolute;top:28px;left:28px;line-height:.6;pointer-events:none}
+.stars{color:var(--gold);font-size:11px;letter-spacing:3px;margin-bottom:18px;position:relative;z-index:1}
+.tcard-text{font-family:'Playfair Display',serif;font-size:17px;font-weight:300;font-style:italic;color:var(--dark);line-height:1.7;margin-bottom:32px;position:relative;z-index:1}
+.tcard-author{display:flex;align-items:center;gap:14px}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--ivory);border:1px solid var(--border);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.author-meta h4{font-size:13px;font-weight:400;color:var(--dark);margin-bottom:2px}
+.author-meta span{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:300}
+
+/* CONTACT */
+.contact{padding:150px 70px;display:grid;grid-template-columns:1fr 1fr;gap:110px;align-items:center}
+.contact-title{font-family:'Playfair Display',serif;font-size:clamp(38px,4vw,60px);font-weight:300;color:var(--dark);line-height:1.1;margin-bottom:44px}
+.contact-title em{font-style:italic;color:var(--gold)}
+.contact-dets{display:flex;flex-direction:column;gap:28px}
+.cdet{display:flex;gap:18px;align-items:flex-start}
+.cdet-icon{width:38px;height:38px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cdet-icon svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.3}
+.cdet-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:5px}
+.cdet-val{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300}
+.cdet-val a{color:var(--muted);text-decoration:none;transition:color .3s}
+.cdet-val a:hover{color:var(--gold)}
+
+/* FORM */
+.form-wrap{background:var(--dark);padding:60px 52px;position:relative}
+.form-wrap::before{content:'';position:absolute;inset:0;border:1px solid rgba(201,169,110,.18);pointer-events:none}
+.form-ttl{font-family:'Playfair Display',serif;font-size:26px;font-weight:300;color:var(--ivory);margin-bottom:6px}
+.form-sub{font-size:11px;color:rgba(242,235,224,.35);font-weight:300;letter-spacing:.06em;margin-bottom:40px}
+.fg{margin-bottom:22px}
+.fg label{display:block;font-size:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;font-weight:300}
+.fg input,.fg select,.fg textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(201,169,110,.22);padding:11px 0;font-family:'Raleway',sans-serif;font-size:13px;font-weight:300;color:var(--ivory);outline:none;transition:border-color .3s;cursor:none}
+.fg select{background:var(--dark)}
+.fg select option{background:var(--charcoal)}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(242,235,224,.2)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-bottom-color:var(--gold)}
+.fg textarea{resize:none;height:72px}
+.fgrow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-btn{width:100%;background:transparent;border:1px solid var(--gold);padding:16px;font-family:'Raleway',sans-serif;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);cursor:none;margin-top:10px;transition:all .35s;font-weight:300}
+.form-btn:hover{background:var(--gold);color:var(--dark)}
+
+/* MAP */
+.mapzone{height:380px;background:var(--ivory);display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border)}
+.mapzone-inner{text-align:center}
+.mapzone-inner p{font-family:'Playfair Display',serif;font-size:20px;font-weight:300;font-style:italic;color:var(--muted);margin-bottom:10px}
+.mapzone-inner span{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:300}
 
 /* FOOTER */
-footer {
-  margin-top: auto;
-  border-top: 1px solid var(--border);
-  padding: 28px 20px;
-  text-align: center;
-}
-.footer-brand {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  color: var(--cream);
-  margin-bottom: 6px;
-}
-.footer-brand span { color: var(--gold); }
-.footer-info {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.15em;
-  color: var(--gray);
-  text-transform: uppercase;
-  line-height: 2.2;
-}
-.footer-sep { color: var(--border); }
+footer{background:var(--dark);padding:80px 70px 44px}
+.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-bottom:64px;border-bottom:1px solid rgba(201,169,110,.1);margin-bottom:36px}
+.foot-logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--ivory);letter-spacing:.12em;margin-bottom:18px}
+.foot-logo span{font-style:italic;color:var(--gold)}
+.foot-tag{font-size:12px;color:rgba(242,235,224,.35);font-weight:300;line-height:1.8;letter-spacing:.04em;max-width:240px;margin-bottom:32px}
+.foot-soc{display:flex;gap:10px}
+.soc-link{width:34px;height:34px;border:1px solid rgba(201,169,110,.18);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all .3s}
+.soc-link:hover{border-color:var(--gold);background:rgba(201,169,110,.07)}
+.soc-link svg{width:13px;height:13px;stroke:rgba(201,169,110,.55);fill:none;stroke-width:1.5}
+.soc-link:hover svg{stroke:var(--gold)}
+.foot-col h4{font-size:8px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;font-weight:300}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:12px}
+.foot-col a{font-size:12px;color:rgba(242,235,224,.38);text-decoration:none;font-weight:300;letter-spacing:.04em;transition:color .3s}
+.foot-col a:hover{color:var(--gold)}
+.foot-bot{display:flex;justify-content:space-between;align-items:center}
+.foot-bot p{font-size:10px;color:rgba(242,235,224,.2);font-weight:300;letter-spacing:.06em}
+.foot-bot a{color:rgba(201,169,110,.4);text-decoration:none}
+.foot-bot a:hover{color:var(--gold)}
 
-/* BUTTONS */
-.btn-gold {
-  display: inline-block;
-  background: var(--gold);
-  color: var(--black);
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 14px 26px;
-  border-radius: 2px;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.18s, box-shadow 0.2s;
-}
-.btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(201,168,76,0.28); }
-.btn-outline {
-  display: inline-block;
-  background: transparent;
-  color: var(--gold);
-  font-family: 'DM Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  padding: 13px 26px;
-  border-radius: 2px;
-  text-decoration: none;
-  border: 1px solid rgba(201,168,76,0.5);
-  cursor: pointer;
-  transition: background 0.2s, transform 0.18s;
-}
-.btn-outline:hover { background: var(--gold-dim); transform: translateY(-1px); }
+/* REVEAL */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease}
+.rv.in{opacity:1;transform:translateY(0)}
 
-/* highlight today */
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes zoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+  nav{padding:24px 32px}nav.stuck{padding:16px 32px}
+  .hero{grid-template-columns:1fr}.hero-right{display:none}
+  .hero-left{padding:120px 40px 80px}
+  .about,.ritual-inner,.contact{grid-template-columns:1fr;gap:60px;padding:80px 32px}
+  .services{padding:0 32px 80px}
+  .services-grid{grid-template-columns:1fr 1fr}
+  .team{padding:80px 32px}.team-grid{grid-template-columns:1fr 1fr}
+  .testi{padding:80px 32px}.testi-grid{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr;height:auto}
+  .gallery-cell{height:260px}
+  .foot-top{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
+  body{cursor:auto}.cur-dot,.cur-ring{display:none}
+}
 </style>
 </head>
 <body>
-<div class="site-wrapper">
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-inner">
-      <a class="nav-brand" href="index.html">El <span>Maestro</span></a>
-      <div class="nav-links">
-        <a href="index.html" class="active">Inicio</a>
-        <a href="precios.html">Precios</a>
-        <a href="agenda.html">Agendar</a>
-      </div>
-    </div>
-  </nav>
+<div class="cur-dot" id="dot"></div>
+<div class="cur-ring" id="ring"></div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <span class="hero-scissors">✂</span>
-    <p class="hero-sub">Est. 2015 · Barbería de Lujo</p>
-    <h1>El Arte del<br><em>Corte Perfecto</em></h1>
-    <p class="hero-desc">Más de 10 años dando forma a estilos únicos. Barberos expertos, atención personalizada y el ambiente que mereces.</p>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo">Ma <span>Chère</span></a>
+  <ul class="nav-links">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#filosofia">Filosofía</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#reserva" class="nav-cta">Reservar cita</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Barcelona · Esthétique de Luxe · Desde 2012</p>
+    <h1 class="hero-title">
+      Belleza que<br>
+      <em>te pertenece.</em>
+    </h1>
+    <p class="hero-body">En Ma Chère cada tratamiento es un ritual íntimo, diseñado para revelarte en tu versión más luminosa. Bienvenida a tu santuario en Barcelona.</p>
     <div class="hero-btns">
-      <a class="btn-gold" href="agenda.html">✦ Reservar Cita</a>
-      <a class="btn-outline" href="precios.html">Ver Precios</a>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <div class="features">
-    <div class="feature">
-      <div class="feature-icon">✦</div>
-      <div class="feature-title">Expertos</div>
-      <div class="feature-desc">Barberos certificados con años de experiencia</div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⏱</div>
-      <div class="feature-title">Sin Esperas</div>
-      <div class="feature-desc">Agenda tu cita y llega directo a la silla</div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">✂</div>
-      <div class="feature-title">Calidad</div>
-      <div class="feature-desc">Productos premium, técnicas modernas y clásicas</div>
+      <a href="#servicios" class="btn-primary">Descubrir servicios</a>
+      <a href="#filosofia" class="btn-secondary">Nuestra historia</a>
     </div>
   </div>
-
-  <!-- BARBERS -->
-  <section class="section">
-    <p class="section-label">Nuestro Equipo</p>
-    <h2 class="section-title">Los Maestros</h2>
-    <div class="gold-line"></div>
-    <div class="barbers">
-      <div class="barber-card">
-        <div class="barber-avatar">👨‍🦱</div>
-        <div>
-          <div class="barber-name">Carlos "El Maestro"</div>
-          <div class="barber-tag">Fundador · Especialista en Fade</div>
-          <div class="barber-stars">★★★★★ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 10+ años de experiencia</span></div>
-        </div>
-      </div>
-      <div class="barber-card">
-        <div class="barber-avatar">👨‍🦲</div>
-        <div>
-          <div class="barber-name">Miguel</div>
-          <div class="barber-tag">Barbero Senior · Estilos Clásicos</div>
-          <div class="barber-stars">★★★★★ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 7 años de experiencia</span></div>
-        </div>
-      </div>
-      <div class="barber-card">
-        <div class="barber-avatar">🧔</div>
-        <div>
-          <div class="barber-name">Diego</div>
-          <div class="barber-tag">Especialista en Barba</div>
-          <div class="barber-stars">★★★★☆ <span style="color:var(--light-gray);font-size:0.72rem;font-family:'Barlow',sans-serif"> 4 años de experiencia</span></div>
-        </div>
-      </div>
+  <div class="hero-right">
+    <!-- ★ REEMPLAZA src con tu imagen principal de portada -->
+    <img class="hero-img" src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=1400&q=85" alt="Ma Chère — Centro de estética Barcelona">
+    <div class="hero-overlay"></div>
+    <div class="hero-badge">
+      <div class="hero-badge-text">Lujo&nbsp;·&nbsp;Ritual<br>Belleza&nbsp;·&nbsp;Cuidado</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- HOURS -->
-  <section class="section" style="padding-top:0">
-    <p class="section-label">Atención</p>
-    <h2 class="section-title">Horarios</h2>
-    <div class="gold-line"></div>
-    <div class="hours-grid" id="hoursGrid">
-      <div class="hours-row" data-day="1"><span class="hours-day">Lunes</span><span class="hours-time">9:00 — 20:00</span></div>
-      <div class="hours-row" data-day="2"><span class="hours-day">Martes</span><span class="hours-time">9:00 — 20:00</span></div>
-      <div class="hours-row" data-day="3"><span class="hours-day">Miércoles</span><span class="hours-time">9:00 — 20:00</span></div>
-      <div class="hours-row" data-day="4"><span class="hours-day">Jueves</span><span class="hours-time">9:00 — 20:00</span></div>
-      <div class="hours-row" data-day="5"><span class="hours-day">Viernes</span><span class="hours-time">9:00 — 21:00</span></div>
-      <div class="hours-row" data-day="6"><span class="hours-day">Sábado</span><span class="hours-time">9:00 — 18:00</span></div>
-      <div class="hours-row" data-day="0"><span class="hours-day">Domingo</span><span class="hours-closed">Cerrado</span></div>
-    </div>
-  </section>
-
-  <!-- LOCATION -->
-  <section class="section" style="padding-top:0">
-    <p class="section-label">Encuéntranos</p>
-    <h2 class="section-title">Ubicación</h2>
-    <div class="gold-line"></div>
-    <div class="location-card">
-      <div class="location-map-placeholder">📍</div>
-      <div class="location-detail">
-        <div class="loc-icon">📍</div>
-        <div>
-          <div class="loc-label">Dirección</div>
-          <div class="loc-value">Av. Reforma 245, Col. Centro<br>Ciudad de México, CDMX</div>
-        </div>
-      </div>
-      <div class="location-detail">
-        <div class="loc-icon">📞</div>
-        <div>
-          <div class="loc-label">Teléfono</div>
-          <div class="loc-value">+52 55 1234 5678</div>
-        </div>
-      </div>
-      <div class="location-detail">
-        <div class="loc-icon">✉</div>
-        <div>
-          <div class="loc-label">Email</div>
-          <div class="loc-value">citas@elmaestrobarberia.mx</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-banner">
-    <h2>¿Listo para tu<br>próximo <em>look</em>?</h2>
-    <p>Agenda tu cita en minutos. Sin llamadas, sin esperas.<br>Solo tú y el mejor corte de tu vida.</p>
-    <a class="btn-gold" href="agenda.html">✦ Agendar Ahora</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-brand">El <span>Maestro</span> Barbería</div>
-    <div class="footer-info">
-      Av. Reforma 245 · CDMX<span class="footer-sep"> &nbsp;|&nbsp; </span>+52 55 1234 5678<br>
-      © 2025 El Maestro Barbería — Todos los derechos reservados
-    </div>
-  </footer>
-
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="tick-item">Tratamientos Faciales</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Rituales Corporales</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Masajes de Lujo</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Manicura &amp; Pedicura</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Depilación Láser</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Alta Cosmética</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Tratamientos Faciales</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Rituales Corporales</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Masajes de Lujo</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Manicura &amp; Pedicura</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Depilación Láser</span><span class="tick-sep">✦</span>
+    <span class="tick-item">Alta Cosmética</span><span class="tick-sep">✦</span>
+  </div>
 </div>
+
+<!-- ABOUT -->
+<section class="about" id="filosofia">
+  <div class="about-img-wrap rv">
+    <!-- ★ REEMPLAZA con foto del espacio o ambientación -->
+    <img class="about-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=900&q=85" alt="Espacio Ma Chère Barcelona">
+    <div class="about-frame"></div>
+  </div>
+  <div class="rv">
+    <p class="section-tag">Nuestra filosofía</p>
+    <h2 class="about-title">El arte del<br><em>cuidado consciente.</em></h2>
+    <div class="about-body">
+      <p>En Ma Chère creemos que la belleza no se impone, se revela. Cada visita es un espacio de calma, precisión y placer donde trabajamos con los mejores productos y técnicas del mundo de la estética.</p>
+      <p>Nuestro centro, en el corazón de Barcelona, es un refugio donde el tiempo se detiene y tú eres la única protagonista. Desde 2012 acompañando a mujeres que se merecen lo mejor.</p>
+    </div>
+    <div class="about-nums">
+      <div class="num-item">
+        <div class="num-val">12</div>
+        <div class="num-label">Años de experiencia</div>
+      </div>
+      <div class="num-item">
+        <div class="num-val">4k+</div>
+        <div class="num-label">Clientas felices</div>
+      </div>
+      <div class="num-item">
+        <div class="num-val">98%</div>
+        <div class="num-label">Satisfacción</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="services-head rv">
+    <p class="section-tag" style="text-align:center">Nuestros tratamientos</p>
+    <h2 class="services-title">Una colección<br>de <em>rituales.</em></h2>
+  </div>
+  <div class="services-grid rv">
+    <div class="srv">
+      <div class="srv-n">01</div>
+      <h3>Tratamientos Faciales</h3>
+      <p>Protocolos de alta cosmética con marcas como Sisley, La Mer y Valmont. Hidratación, antiedad y luminosidad adaptadas a tu piel.</p>
+      <div class="srv-price">Desde 95€<small>/ sesión</small></div>
+      <a href="#reserva" class="srv-link">Reservar</a>
+    </div>
+    <div class="srv">
+      <div class="srv-n">02</div>
+      <h3>Rituales Corporales</h3>
+      <p>Envoltorios, exfoliaciones y masajes para regenerar, nutrir y devolver el brillo natural a tu piel de pies a cabeza.</p>
+      <div class="srv-price">Desde 120€<small>/ sesión</small></div>
+      <a href="#reserva" class="srv-link">Reservar</a>
+    </div>
+    <div class="srv">
+      <div class="srv-n">03</div>
+      <h3>Masajes de Lujo</h3>
+      <p>Masajes terapéuticos y de relajación con piedras calientes, aceites esenciales y técnicas orientales para cuerpo y mente.</p>
+      <div class="srv-price">Desde 85€<small>/ sesión</small></div>
+      <a href="#reserva" class="srv-link">Reservar</a>
+    </div>
+    <div class="srv">
+      <div class="srv-n">04</div>
+      <h3>Manicura &amp; Pedicura</h3>
+      <p>Tratamientos premium con técnicas japonesas y productos de alta gama. Diseños exclusivos y cuidado profesional.</p>
+      <div class="srv-price">Desde 55€<small>/ sesión</small></div>
+      <a href="#reserva" class="srv-link">Reservar</a>
+    </div>
+    <div class="srv">
+      <div class="srv-n">05</div>
+      <h3>Depilación Láser</h3>
+      <p>Tecnología Soprano Ice de última generación. Resultados permanentes, sin dolor, para todo tipo de pieles y tonos.</p>
+      <div class="srv-price">Desde 60€<small>/ sesión</small></div>
+      <a href="#reserva" class="srv-link">Reservar</a>
+    </div>
+    <div class="srv">
+      <div class="srv-n">06</div>
+      <h3>Packs &amp; Bonos Regalo</h3>
+      <p>Diseña tu ritual completo o regala una experiencia única. Nuestros packs combinan tratamientos para un cuidado integral.</p>
+      <div class="srv-price">Desde 250€<small>/ pack</small></div>
+      <a href="#reserva" class="srv-link">Consultar</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gallery">
+  <!-- ★ REEMPLAZA estas imágenes con las tuyas del espacio y tratamientos -->
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=700&q=85" alt="Tratamiento facial">
+    <span class="gallery-cap">Ritual Facial</span>
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=1200&q=85" alt="Espacio Ma Chère">
+    <span class="gallery-cap">Nuestro espacio</span>
+  </div>
+  <div class="gallery-cell">
+    <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=700&q=85" alt="Productos alta cosmética">
+    <span class="gallery-cap">Haute Cosmétique</span>
+  </div>
+</div>
+
+<!-- RITUAL EXPERIENCE -->
+<section class="ritual">
+  <div class="ritual-inner">
+    <div class="rv">
+      <p class="section-tag">La experiencia</p>
+      <h2 class="ritual-title">Cada visita,<br>un <em>ritual.</em></h2>
+      <p class="ritual-body">Desde que cruzas la puerta, el mundo exterior desaparece. Cada detalle ha sido pensado para que te sientas única, cuidada y completamente tú.</p>
+    </div>
+    <div class="ritual-steps rv">
+      <div class="step">
+        <div class="step-i">i.</div>
+        <div class="step-body">
+          <h4>Bienvenida &amp; Diagnóstico</h4>
+          <p>Recepción con infusión de bienvenida y análisis personalizado de tu piel y necesidades específicas.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-i">ii.</div>
+        <div class="step-body">
+          <h4>Protocolo Personalizado</h4>
+          <p>Tratamiento adaptado exclusivamente a ti con los productos y técnicas más adecuados para cada momento.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-i">iii.</div>
+        <div class="step-body">
+          <h4>Ritual de Finalización</h4>
+          <p>Acabado con masaje facial y protocolo de hidratación para potenciar y prolongar los resultados.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-i">iv.</div>
+        <div class="step-body">
+          <h4>Seguimiento &amp; Plan de Cuidado</h4>
+          <p>Rutina personalizada para el hogar y próximas visitas recomendadas para mantener tu mejor versión.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="equipo">
+  <div class="team-top rv">
+    <div>
+      <p class="section-tag">Nuestro equipo</p>
+      <h2 class="team-title">Expertas en<br><em>tu belleza.</em></h2>
+    </div>
+    <a href="#contacto" class="team-more">Conocer el equipo →</a>
+  </div>
+  <div class="team-grid rv">
+    <div class="member">
+      <div class="member-img">
+        <!-- ★ REEMPLAZA con fotos reales de tu equipo -->
+        <img src="https://images.unsplash.com/photo-1607008829749-c0f284a49fc4?w=500&q=85" alt="Sophie Leclerc">
+      </div>
+      <div class="member-info">
+        <h3>Sophie Leclerc</h3>
+        <span>Directora &amp; Senior</span>
+      </div>
+    </div>
+    <div class="member">
+      <div class="member-img">
+        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500&q=85" alt="Marta Vidal">
+      </div>
+      <div class="member-info">
+        <h3>Marta Vidal</h3>
+        <span>Especialista Facial</span>
+      </div>
+    </div>
+    <div class="member">
+      <div class="member-img">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&q=85" alt="Ana Moreno">
+      </div>
+      <div class="member-info">
+        <h3>Ana Moreno</h3>
+        <span>Terapeuta Corporal</span>
+      </div>
+    </div>
+    <div class="member">
+      <div class="member-img">
+        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&q=85" alt="Laia Puig">
+      </div>
+      <div class="member-info">
+        <h3>Laia Puig</h3>
+        <span>Nail Artist &amp; Láser</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <p class="section-tag" style="text-align:center;margin-bottom:16px">Lo que dicen de nosotras</p>
+  <h2 class="testi-title rv">Experiencias que <em>brillan.</em></h2>
+  <div class="testi-grid rv">
+    <div class="tcard">
+      <div class="qmark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="tcard-text">Desde la primera visita supe que Ma Chère era diferente. La atención, el ambiente, los resultados... todo es extraordinario. Mi pequeño lujo quincenal.</p>
+      <div class="tcard-author">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=85" alt="Isabel M."></div>
+        <div class="author-meta"><h4>Isabel M.</h4><span>Clienta desde 2019</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="qmark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="tcard-text">El tratamiento facial con Sisley es absolutamente transformador. Sophie tiene unas manos mágicas y el espacio es una joya escondida en Barcelona.</p>
+      <div class="tcard-author">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&q=85" alt="Carla B."></div>
+        <div class="author-meta"><h4>Carla B.</h4><span>Clienta desde 2021</span></div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="qmark">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="tcard-text">Vine por el ritual corporal y salí completamente enamorada. Difícil encontrar este nivel de profesionalidad y cariño en un mismo lugar. 100% recomendable.</p>
+      <div class="tcard-author">
+        <div class="avatar"><img src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=100&q=85" alt="Nuria P."></div>
+        <div class="author-meta"><h4>Nuria P.</h4><span>Clienta desde 2023</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="rv">
+    <p class="section-tag">Visítanos</p>
+    <h2 class="contact-title">Estamos en<br><em>Barcelona.</em></h2>
+    <div class="contact-dets">
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Dirección</div>
+          <div class="cdet-val">Carrer Travessera de les Corts, 285<br>08028 Barcelona</div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Teléfono</div>
+          <div class="cdet-val"><a href="tel:+34931234567">+34 93 123 45 67</a></div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Email</div>
+          <div class="cdet-val"><a href="mailto:hola@machere.es">hola@machere.es</a></div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Horario</div>
+          <div class="cdet-val">Lunes – Viernes: 9:00 – 20:00<br>Sábados: 9:00 – 18:00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-wrap rv" id="reserva">
+    <h3 class="form-ttl">Reserva tu cita</h3>
+    <p class="form-sub">Confirmación en menos de 24 horas</p>
+    <div class="fgrow">
+      <div class="fg"><label>Nombre</label><input type="text" placeholder="Tu nombre"></div>
+      <div class="fg"><label>Apellido</label><input type="text" placeholder="Tu apellido"></div>
+    </div>
+    <div class="fg"><label>Email</label><input type="email" placeholder="tu@email.com"></div>
+    <div class="fg"><label>Teléfono</label><input type="tel" placeholder="+34 6XX XXX XXX"></div>
+    <div class="fg">
+      <label>Tratamiento</label>
+      <select>
+        <option value="">Selecciona un tratamiento</option>
+        <option>Tratamiento Facial</option>
+        <option>Ritual Corporal</option>
+        <option>Masaje de Lujo</option>
+        <option>Manicura &amp; Pedicura</option>
+        <option>Depilación Láser</option>
+        <option>Pack Completo</option>
+      </select>
+    </div>
+    <div class="fgrow">
+      <div class="fg"><label>Fecha</label><input type="date"></div>
+      <div class="fg">
+        <label>Hora</label>
+        <select>
+          <option>09:00</option><option>10:00</option><option>11:00</option>
+          <option>12:00</option><option>16:00</option><option>17:00</option>
+          <option>18:00</option><option>19:00</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Notas</label><textarea placeholder="Alergias, preferencias o cualquier información relevante..."></textarea></div>
+    <button class="form-btn" id="formBtn">Solicitar cita</button>
+  </div>
+</section>
+
+<!-- MAP PLACEHOLDER -->
+<div class="mapzone">
+  <div class="mapzone-inner">
+    <p>Travessera de les Corts, 285 · Barcelona</p>
+    <span>· Aquí puedes insertar tu mapa de Google Maps ·</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo">Ma <span>Chère</span></div>
+      <p class="foot-tag">Centre d'esthétique de luxe en el corazón de Barcelona. Donde el cuidado se convierte en arte.</p>
+      <div class="foot-soc">
+        <a href="#" class="soc-link" title="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+        </a>
+        <a href="#" class="soc-link" title="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" class="soc-link" title="Pinterest">
+          <svg viewBox="0 0 24 24"><path d="M8 12c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4c-.7 0-1.4-.2-2-.5L8.5 20H7l1.5-5.5A4 4 0 0 1 8 12z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#servicios">Tratamientos Faciales</a></li>
+        <li><a href="#servicios">Rituales Corporales</a></li>
+        <li><a href="#servicios">Masajes de Lujo</a></li>
+        <li><a href="#servicios">Manicura &amp; Pedicura</a></li>
+        <li><a href="#servicios">Depilación Láser</a></li>
+        <li><a href="#servicios">Packs &amp; Bonos</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Ma Chère</h4>
+      <ul>
+        <li><a href="#filosofia">Nuestra Filosofía</a></li>
+        <li><a href="#equipo">El Equipo</a></li>
+        <li><a href="#">Productos</a></li>
+        <li><a href="#">Blog de Belleza</a></li>
+        <li><a href="#">Tarjetas Regalo</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#reserva">Reservar Cita</a></li>
+        <li><a href="tel:+34931234567">+34 93 123 45 67</a></li>
+        <li><a href="mailto:hola@machere.es">hola@machere.es</a></li>
+        <li><a href="#">Travessera de les Corts, 285</a></li>
+        <li><a href="#">Barcelona, 08028</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <p>© 2025 Ma Chère · Esthétique de Luxe · Barcelona</p>
+    <p><a href="#">Privacidad</a> · <a href="#">Aviso Legal</a> · <a href="#">Cookies</a></p>
+  </div>
+</footer>
+
 <script>
-  // Highlight today's hours
-  const today = new Date().getDay();
-  const row = document.querySelector(`.hours-row[data-day="${today}"]`);
-  if (row) row.classList.add('hours-today');
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{
+  dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
+  setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'},90);
+});
+document.querySelectorAll('a,button,.srv,.member').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.transform='translate(-50%,-50%) scale(1.9)';dot.style.transform='translate(-50%,-50%) scale(0.4)'});
+  el.addEventListener('mouseleave',()=>{ring.style.transform='translate(-50%,-50%) scale(1)';dot.style.transform='translate(-50%,-50%) scale(1)'});
+});
+// Sticky nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>50));
+// Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*90);obs.unobserve(e.target)}});
+},{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+// Form
+document.getElementById('formBtn').addEventListener('click',function(){
+  this.textContent='✓ Solicitud enviada — Te confirmamos pronto';
+  this.style.cssText+='opacity:.5;pointer-events:none';
+});
 </script>
 </body>
 </html>
