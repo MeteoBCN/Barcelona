@@ -41,7 +41,7 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 
 /* HERO */
 .hero{height:100vh;display:flex;position:relative;overflow:hidden;background:var(--cream)}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px 80px;position:relative;z-index:2}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:120px 80px 80px 80px;position:relative;z-index:2;width:50%}
 .hero-eyebrow{font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:36px;font-weight:300;opacity:0;animation:up .9s ease .3s forwards}
 .hero-title{font-family:'Playfair Display',serif;font-size:clamp(56px,6.5vw,88px);font-weight:300;line-height:1.05;color:var(--dark);margin-bottom:36px;opacity:0;animation:up .9s ease .5s forwards}
 .hero-title em{display:block;font-style:italic;color:var(--gold)}
@@ -85,8 +85,8 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .srv-link::after{content:'→'}
 
 /* PORTADA IMAGE */
-.portada-wrap{width:100%;overflow:hidden;line-height:0}
-.portada-img{width:100%;height:auto;display:block;object-fit:cover}
+.portada-wrap{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;line-height:0;z-index:0}
+.portada-img{width:100%;height:100%;display:block;object-fit:cover}
 
 /* GALLERY BAND */
 .gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
@@ -297,12 +297,12 @@ footer{background:var(--dark);padding:80px 70px 44px}
 
 <!-- HERO -->
 <section class="hero">
+  <!-- PORTADA IMAGE -->
+  <div class="portada-wrap">
+    <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
+  </div>
   <div class="hero-left">
     <p class="hero-eyebrow">TU ESTÉTICA INTEGRAL</p>
-    <!-- PORTADA IMAGE -->
-<div class="portada-wrap">
-  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
-</div>
     <h1 class="hero-title">
       Rituales<br>
       <em>de belleza.</em>
