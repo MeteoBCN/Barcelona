@@ -91,8 +91,8 @@ nav:not(.stuck) .nav-cta:hover{background:var(--gold);color:var(--cream)}
 .srv-link::after{content:'→'}
 
 /* PORTADA IMAGE */
-.portada-wrap{width:100%;line-height:0;margin-top:0;margin-bottom:50px}
-.portada-img{width:100%;height:auto;display:block}
+.portada-wrap{width:100%;line-height:0;margin-top:0;margin-bottom:50px;position:relative;height:100vh;overflow:hidden}
+.portada-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
 
 /* GALLERY BAND */
 .gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
