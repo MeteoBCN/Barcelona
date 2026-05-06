@@ -204,10 +204,10 @@ footer{background:var(--dark);padding:80px 70px 44px}
 /* Mobile */
 @media(max-width:720px){
   /* Nav */
-  nav{padding:20px 24px}
+  nav{padding:20px 24px;justify-content:flex-start;gap:16px}
   nav.stuck{padding:14px 24px}
   .nav-links{display:none}
-  .nav-cta{padding:10px 18px;font-size:8px}
+  .nav-cta{padding:10px 18px;font-size:8px;margin-left:auto}
   .nav-burger{display:flex}
   .mobile-menu{display:flex}
   .mobile-menu-backdrop{display:block}
@@ -283,18 +283,23 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </head>
 <body>
 
+<!-- PORTADA IMAGE -->
+<div class="portada-wrap">
+  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
+</div>
+
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Ma <span>Chère</span></a>
+  <button class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="nav-links">
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#filosofia">Filosofía</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://booksy.com/es-es/178988" target="_blank" class="nav-cta">Reservar cita</a>
-  <button class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -306,11 +311,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
     <li><a href="#contacto" class="mob-link">Contacto</a></li>
   </ul>
   <a href="https://booksy.com/es-es/178988" target="_blank" class="mobile-cta mob-link">Reservar cita</a>
-</div>
-
-<!-- PORTADA IMAGE -->
-<div class="portada-wrap">
-  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
 </div>
 
 <!-- HERO -->
