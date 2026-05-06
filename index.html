@@ -125,6 +125,17 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:f
 /* BOOKSY */
 .booksy-wrap{min-height:300px;display:flex;align-items:flex-start}
 
+/* MAP STYLED */
+.map-wrap{margin-top:36px}
+.map-label{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:16px}
+.map-container{position:relative;width:100%;height:260px;border:1px solid rgba(201,169,110,0.2);overflow:hidden;background:#1e1b17}
+.map-container iframe{filter:grayscale(100%) invert(92%) sepia(10%) saturate(400%) hue-rotate(10deg) brightness(85%) contrast(90%)}
+.map-overlay{position:absolute;bottom:0;left:0;right:0;padding:12px 16px;background:linear-gradient(transparent,rgba(26,23,20,.85));pointer-events:none}
+.map-pin-label{display:flex;align-items:center;gap:8px}
+.map-pin-label span{font-family:'Open Sans',serif;font-style:italic;font-size:12px;color:rgba(242,235,224,.8);font-weight:300;letter-spacing:.04em}
+.map-directions{position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--dark);background:rgba(201,169,110,.92);padding:8px 14px;text-decoration:none;font-weight:400;transition:all .3s}
+.map-directions:hover{background:var(--gold2);color:#fff}
+
 /* MAP */
 .mapzone{height:380px;background:var(--ivory);display:flex;align-items:center;justify-content:center;border-top:1px solid var(--border)}
 .mapzone-inner{text-align:center}
@@ -302,7 +313,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
   
 <!-- PORTADA IMAGE -->
 <div class="portada-wrap">
-  <img src="portadainicio.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
+  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
 </div>
 
 <!-- HERO -->
@@ -478,6 +489,31 @@ footer{background:var(--dark);padding:80px 70px 44px}
         </div>
       </div>
     </div>
+
+    <!-- MAPA ESTILIZADO -->
+    <div class="map-wrap">
+      <div class="map-label">Cómo llegar</div>
+      <div class="map-container">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=2.1270%2C41.3790%2C2.1370%2C41.3850&layer=mapnik&marker=41.3821%2C2.1320"
+          style="width:100%;height:100%;border:0;opacity:0;transition:opacity .6s"
+          loading="lazy"
+          onload="this.style.opacity=1"
+          title="Ubicación Ma Chère"
+        ></iframe>
+        <div class="map-overlay">
+          <div class="map-pin-label">
+            <svg viewBox="0 0 24 24" fill="var(--gold)" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Ma Chère · Travessera de les Corts, 285</span>
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Travessera+de+les+Corts+285+Barcelona" target="_blank" rel="noopener" class="map-directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+
   </div>
   <div class="booksy-wrap rv" id="reserva">
     <script type="text/javascript" src="https://booksy.com/widget/code.js?id=178988&country=es&lang=es"></script>
