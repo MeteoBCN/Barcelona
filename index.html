@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ma Chère">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/Barcelona/manifest.json">
 <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=192&q=85">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
@@ -584,7 +584,7 @@ document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 // PWA Service Worker
 if('serviceWorker' in navigator){
   window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+    navigator.serviceWorker.register('/Barcelona/sw.js').catch(()=>{});
   });
 }
 </script>
