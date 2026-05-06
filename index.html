@@ -68,11 +68,11 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:f
 .services-title{font-family:'Playfair Display',serif;font-size:clamp(38px,4.2vw,62px);font-weight:300;color:var(--dark);line-height:1.1}
 .services-title em{font-style:italic;color:var(--gold)}
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border)}
-.srv{padding:52px 44px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background .4s}
+.srv{padding:52px 44px;border-right:1px solid rgba(201,169,110,0.3);border-bottom:1px solid rgba(201,169,110,0.3);position:relative;overflow:hidden;transition:background .4s;background:#f5ead6}
 .srv:nth-child(3n){border-right:none}
 .srv:nth-child(4),.srv:nth-child(5),.srv:nth-child(6){border-bottom:none}
-.srv:hover{background:var(--ivory)}
-.srv::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.srv:hover{background:#e8d4a8}
+.srv::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--gold2);transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .srv:hover::after{transform:scaleX(1)}
 .srv-n{font-family:'Playfair Display',serif;font-size:72px;font-weight:300;color:rgba(201,169,110,.08);line-height:.8;margin-bottom:28px;font-style:italic}
 .srv h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:400;color:var(--dark);margin-bottom:14px}
@@ -533,6 +533,8 @@ footer{background:var(--dark);padding:80px 70px 44px}
         </a>
       </div>
     </div>
+    <p style="margin-top:14px;font-family:'Open Sans',serif;font-style:italic;font-size:12px;color:rgba(242,235,224,.4);font-weight:300;letter-spacing:.04em">© Centro de estética integral Ma Chère</p>
+  </div>
 
   </div>
   <div class="booksy-wrap rv" id="reserva">
