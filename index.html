@@ -29,14 +29,7 @@ html{scroll-behavior:smooth}
 body{font-family:'Open Sans',serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:36px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s;background:transparent}
-nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-nav:not(.stuck) .logo{color:var(--ivory)}
-nav:not(.stuck) .logo span{color:var(--gold)}
-nav:not(.stuck) .nav-links a{color:rgba(242,235,224,.7)}
-nav:not(.stuck) .nav-links a:hover{color:var(--gold)}
-nav:not(.stuck) .nav-cta{border-color:rgba(201,169,110,.7);color:rgba(242,235,224,.85)}
-nav:not(.stuck) .nav-cta:hover{background:var(--gold);color:var(--cream)}
+nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s;background:rgba(250,246,240,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
 .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;letter-spacing:.18em;text-decoration:none;color:var(--dark)}
 .logo span{font-style:italic;color:var(--gold)}
 .nav-links{display:flex;gap:44px;list-style:none}
@@ -91,8 +84,8 @@ nav:not(.stuck) .nav-cta:hover{background:var(--gold);color:var(--cream)}
 .srv-link::after{content:'→'}
 
 /* PORTADA IMAGE */
-.portada-wrap{width:100%;line-height:0;margin-top:0;margin-bottom:50px;position:relative;height:100vh;overflow:hidden}
-.portada-img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.portada-wrap{width:100%;line-height:0;margin:0;padding:0}
+.portada-img{width:100%;height:auto;display:block}
 
 /* GALLERY BAND */
 .gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
@@ -270,6 +263,11 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </head>
 <body>
 
+<!-- PORTADA IMAGE -->
+<div class="portada-wrap">
+  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
+</div>
+
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Ma <span>Chère</span></a>
@@ -280,11 +278,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </ul>
   <a href="https://booksy.com/es-es/178988" target="_blank" class="nav-cta">Reservar cita</a>
 </nav>
-
-<!-- PORTADA IMAGE -->
-<div class="portada-wrap">
-  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -339,14 +332,14 @@ footer{background:var(--dark);padding:80px 70px 44px}
       <div class="srv-n">Alisado</div>
       <h3>Alisado Brasileño</h3>
       <p>El Alisado Brasileño es el tratamiento estrella para quienes buscan olvidarse del encrespamiento y lucir una melena impecable. A través de una intensa infusión de queratina, este servicio no solo alisa, sino que reconstruye la fibra capilar desde el interior.<br>Liso Impecable, reparador, brillo espejo y ahorro de tiempo. ¡Luce una melena perfecta sin esfuerzo!</br></p>
-      <div class="srv-price">Desde 100€</div>
+      <div class="srv-price">Desde 100€<small>/ sesión</small></div>
       <a href="#reserva" class="srv-link">Comprar</a>
     </div>
     <div class="srv">
       <div class="srv-n">Corporal</div>
       <h3>Rituales Corporales</h3>
       <p>Envoltorios, exfoliaciones y masajes para regenerar, nutrir y devolver el brillo natural a tu piel de pies a cabeza.</p>
-      <div class="srv-price">Desde 120€</div>
+      <div class="srv-price">Desde 120€<small>/ sesión</small></div>
       <a href="#reserva" class="srv-link">Comprar</a>
     </div>
     <div class="srv">
@@ -481,9 +474,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </a>
 
 <script>
-// Sticky nav
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>50));
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*90);obs.unobserve(e.target)}});
