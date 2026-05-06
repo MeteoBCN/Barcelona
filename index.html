@@ -31,12 +31,12 @@ body{font-family:'Open Sans',serif;background:var(--cream);color:var(--dark);ove
 /* NAV */
 nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s;background:var(--cream);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,169,110,0.15)}
 .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;letter-spacing:.18em;text-decoration:none;color:#1A1714}
-.logo span{font-style:italic;color:#fff}
+.logo span{font-style:italic;color:var(--gold)}
 .nav-links{display:flex;gap:44px;list-style:none}
 .nav-links a{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#3d2e0f;text-decoration:none;font-weight:400;transition:color .3s}
 .nav-links a:hover{color:#fff}
-.nav-cta{font-size:9px;letter-spacing:.24em;text-transform:uppercase;border:1px solid #1A1714;color:#1A1714;padding:11px 26px;text-decoration:none;font-weight:400;transition:all .3s}
-.nav-cta:hover{background:#1A1714;color:#d1ac66}
+.nav-cta{font-size:9px;letter-spacing:.24em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);padding:11px 26px;text-decoration:none;font-weight:400;transition:all .3s}
+.nav-cta:hover{background:var(--gold);color:var(--cream)}
 
 /* HERO */
 .hero{display:flex;position:relative;overflow:hidden;background:var(--cream);margin-top:0}
@@ -286,7 +286,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Ma <span>Chère</span></a>
-  <a href="https://booksy.com/es-es/178988" target="_blank" class="nav-cta">Reservar cita</a>
+  <a href="https://booksy.com/es-es/178988" target="_blank" class="nav-cta">Reservar</a>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -302,7 +302,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
   
 <!-- PORTADA IMAGE -->
 <div class="portada-wrap">
-  <img src="portadainicio.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
+  <img src="PORTADAINICIO.jpg" alt="Ma Chère — Tu estética integral" class="portada-img">
 </div>
 
 <!-- HERO -->
@@ -499,22 +499,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </a>
 
 <script>
-// Hamburger menu
-const burger = document.getElementById('burger');
-const mobileMenu = document.getElementById('mobileMenu');
-const menuBackdrop = document.getElementById('menuBackdrop');
-function toggleMenu(open) {
-  burger.classList.toggle('open', open);
-  mobileMenu.classList.toggle('open', open);
-  menuBackdrop.classList.toggle('open', open);
-  burger.setAttribute('aria-expanded', open);
-  document.body.style.overflow = open ? 'hidden' : '';
-}
-burger.addEventListener('click', () => toggleMenu(!burger.classList.contains('open')));
-menuBackdrop.addEventListener('click', () => toggleMenu(false));
-document.querySelectorAll('.mob-link').forEach(link => {
-  link.addEventListener('click', () => toggleMenu(false));
-});
 
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{
