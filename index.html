@@ -29,8 +29,14 @@ html{scroll-behavior:smooth}
 body{font-family:'Open Sans',serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:36px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:36px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s;background:transparent}
 nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+nav:not(.stuck) .logo{color:var(--ivory)}
+nav:not(.stuck) .logo span{color:var(--gold)}
+nav:not(.stuck) .nav-links a{color:rgba(242,235,224,.7)}
+nav:not(.stuck) .nav-links a:hover{color:var(--gold)}
+nav:not(.stuck) .nav-cta{border-color:rgba(201,169,110,.7);color:rgba(242,235,224,.85)}
+nav:not(.stuck) .nav-cta:hover{background:var(--gold);color:var(--cream)}
 .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;letter-spacing:.18em;text-decoration:none;color:var(--dark)}
 .logo span{font-style:italic;color:var(--gold)}
 .nav-links{display:flex;gap:44px;list-style:none}
@@ -85,7 +91,7 @@ nav.stuck{padding:20px 70px;background:rgba(250,246,240,.96);backdrop-filter:blu
 .srv-link::after{content:'→'}
 
 /* PORTADA IMAGE */
-.portada-wrap{width:100%;line-height:0;margin-top:90px;margin-bottom:50px}
+.portada-wrap{width:100%;line-height:0;margin-top:0;margin-bottom:50px}
 .portada-img{width:100%;height:auto;display:block}
 
 /* GALLERY BAND */
