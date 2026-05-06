@@ -152,6 +152,22 @@ footer{background:var(--dark);padding:80px 70px 44px}
 .foot-bot a{color:rgba(201,169,110,.4);text-decoration:none}
 .foot-bot a:hover{color:var(--gold)}
 
+/* HAMBURGER */
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;cursor:pointer;background:none;border:none;padding:4px;z-index:301}
+.nav-burger span{display:block;height:1px;background:#1A1714;transition:all .35s ease;transform-origin:center}
+.nav-burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* MOBILE MENU OVERLAY */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:299;background:#d1ac66;flex-direction:column;align-items:center;justify-content:center;gap:0;opacity:0;pointer-events:none;transition:opacity .4s ease}
+.mobile-menu.open{opacity:1;pointer-events:all}
+.mobile-menu ul{list-style:none;text-align:center;display:flex;flex-direction:column;gap:8px}
+.mobile-menu ul li a{font-family:'Playfair Display',serif;font-size:clamp(32px,10vw,48px);font-weight:300;font-style:italic;color:#1A1714;text-decoration:none;letter-spacing:.04em;display:block;padding:14px 24px;transition:color .3s}
+.mobile-menu ul li a:hover{color:#fff}
+.mobile-menu .mobile-cta{margin-top:40px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;border:1px solid #1A1714;color:#1A1714;padding:14px 36px;text-decoration:none;font-weight:400;transition:all .3s}
+.mobile-menu .mobile-cta:hover{background:#1A1714;color:#d1ac66}
+
 /* REVEAL */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease}
 .rv.in{opacity:1;transform:translateY(0)}
@@ -189,7 +205,9 @@ footer{background:var(--dark);padding:80px 70px 44px}
   nav{padding:20px 24px}
   nav.stuck{padding:14px 24px}
   .nav-links{display:none}
-  .nav-cta{padding:10px 18px;font-size:8px}
+  .nav-cta{display:none}
+  .nav-burger{display:flex}
+  .mobile-menu{display:flex}
 
   /* Hero: single column, image as background */
   .hero{
@@ -276,7 +294,20 @@ footer{background:var(--dark);padding:80px 70px 44px}
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <a href="https://booksy.com/es-es/178988" target="_blank" class="nav-cta">Reservar cita</a>
+  <button class="nav-burger" id="burger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
+  <ul>
+    <li><a href="#servicios" class="mob-link">Servicios</a></li>
+    <li><a href="#filosofia" class="mob-link">Filosofía</a></li>
+    <li><a href="#contacto" class="mob-link">Contacto</a></li>
+  </ul>
+  <a href="https://booksy.com/es-es/178988" target="_blank" class="mobile-cta mob-link">Reservar cita</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -472,6 +503,20 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </a>
 
 <script>
+// Hamburger menu
+const burger = document.getElementById('burger');
+const mobileMenu = document.getElementById('mobileMenu');
+function toggleMenu(open) {
+  burger.classList.toggle('open', open);
+  mobileMenu.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+burger.addEventListener('click', () => toggleMenu(!burger.classList.contains('open')));
+document.querySelectorAll('.mob-link').forEach(link => {
+  link.addEventListener('click', () => toggleMenu(false));
+});
+
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*90);obs.unobserve(e.target)}});
