@@ -289,7 +289,17 @@ footer{background:var(--dark);padding:80px 70px 44px}
     gap:12px;
     text-align:center;
   }
-}
+/* MODAL RESERVA */
+.modal-backdrop{display:none;position:fixed;inset:0;z-index:1000;background:rgba(26,23,20,0);pointer-events:none;transition:background .4s ease}
+.modal-backdrop.open{display:flex;align-items:center;justify-content:center;background:rgba(26,23,20,.75);pointer-events:all}
+.modal-box{background:var(--dark);border:1px solid rgba(201,169,110,.2);width:90%;max-width:560px;max-height:85vh;overflow-y:auto;position:relative;transform:translateY(24px);opacity:0;transition:transform .4s ease,opacity .4s ease}
+.modal-backdrop.open .modal-box{transform:translateY(0);opacity:1}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:24px 28px;border-bottom:1px solid rgba(201,169,110,.12)}
+.modal-header-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:300;color:var(--ivory);letter-spacing:.06em}
+.modal-header-title em{font-style:italic;color:var(--gold)}
+.modal-close{background:none;border:none;cursor:pointer;color:rgba(242,235,224,.4);font-size:22px;line-height:1;padding:4px;transition:color .3s}
+.modal-close:hover{color:var(--gold)}
+.modal-body{padding:28px}
 </style>
 </head>
 <body>
@@ -297,8 +307,21 @@ footer{background:var(--dark);padding:80px 70px 44px}
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="logo">Ma <span>Chère</span></a>
-  <a href="https://booksy.com/pro/es-es/178988/profile" target="_blank" class="nav-cta">Reservar</a>
+  <a href="#" class="nav-cta" id="btnReservar">Reservar</a>
 </nav>
+
+<!-- MODAL RESERVA -->
+<div class="modal-backdrop" id="modalReserva">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-title">Reservar en Ma <em>Chère</em></div>
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <script type="text/javascript" src="https://booksy.com/widget/code.js?id=178988&country=es&lang=es"></script>
+    </div>
+  </div>
+</div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu-backdrop" id="menuBackdrop"></div>
@@ -537,6 +560,33 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </a>
 
 <script>
+
+// Modal reserva
+const btnReservar = document.getElementById('btnReservar');
+const modalReserva = document.getElementById('modalReserva');
+const modalClose = document.getElementById('modalClose');
+
+btnReservar.addEventListener('click', (e) => {
+  e.preventDefault();
+  modalReserva.classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+modalClose.addEventListener('click', () => {
+  modalReserva.classList.remove('open');
+  document.body.style.overflow = '';
+});
+modalReserva.addEventListener('click', (e) => {
+  if (e.target === modalReserva) {
+    modalReserva.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    modalReserva.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
 
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{
