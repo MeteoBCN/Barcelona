@@ -159,13 +159,15 @@ footer{background:var(--dark);padding:80px 70px 44px}
 .nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .nav-burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
-/* MOBILE MENU OVERLAY */
-.mobile-menu{display:none;position:fixed;inset:0;z-index:299;background:#d1ac66;flex-direction:column;align-items:center;justify-content:center;gap:0;opacity:0;pointer-events:none;transition:opacity .4s ease}
-.mobile-menu.open{opacity:1;pointer-events:all}
-.mobile-menu ul{list-style:none;text-align:center;display:flex;flex-direction:column;gap:8px}
-.mobile-menu ul li a{font-family:'Playfair Display',serif;font-size:clamp(32px,10vw,48px);font-weight:300;font-style:italic;color:#1A1714;text-decoration:none;letter-spacing:.04em;display:block;padding:14px 24px;transition:color .3s}
-.mobile-menu ul li a:hover{color:#fff}
-.mobile-menu .mobile-cta{margin-top:40px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;border:1px solid #1A1714;color:#1A1714;padding:14px 36px;text-decoration:none;font-weight:400;transition:all .3s}
+/* MOBILE MENU DRAWER */
+.mobile-menu-backdrop{display:none;position:fixed;inset:0;z-index:298;background:rgba(26,23,20,0);pointer-events:none;transition:background .4s ease}
+.mobile-menu-backdrop.open{background:rgba(26,23,20,.45);pointer-events:all}
+.mobile-menu{display:none;position:fixed;top:0;right:0;bottom:0;z-index:299;width:78vw;max-width:320px;background:#d1ac66;flex-direction:column;justify-content:center;padding:60px 40px;transform:translateX(100%);pointer-events:none;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.mobile-menu.open{transform:translateX(0);pointer-events:all}
+.mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:48px}
+.mobile-menu ul li a{font-family:'Playfair Display',serif;font-size:28px;font-weight:300;font-style:italic;color:#1A1714;text-decoration:none;letter-spacing:.04em;display:block;padding:12px 0;border-bottom:1px solid rgba(26,23,20,.12);transition:color .3s,padding-left .3s}
+.mobile-menu ul li a:hover{color:#fff;padding-left:8px}
+.mobile-menu .mobile-cta{font-size:9px;letter-spacing:.28em;text-transform:uppercase;border:1px solid #1A1714;color:#1A1714;padding:13px 28px;text-decoration:none;font-weight:400;transition:all .3s;align-self:flex-start}
 .mobile-menu .mobile-cta:hover{background:#1A1714;color:#d1ac66}
 
 /* REVEAL */
@@ -205,9 +207,10 @@ footer{background:var(--dark);padding:80px 70px 44px}
   nav{padding:20px 24px}
   nav.stuck{padding:14px 24px}
   .nav-links{display:none}
-  .nav-cta{display:none}
+  .nav-cta{padding:10px 18px;font-size:8px}
   .nav-burger{display:flex}
   .mobile-menu{display:flex}
+  .mobile-menu-backdrop{display:block}
 
   /* Hero: single column, image as background */
   .hero{
@@ -300,6 +303,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </nav>
 
 <!-- MOBILE MENU -->
+<div class="mobile-menu-backdrop" id="menuBackdrop"></div>
 <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú de navegación">
   <ul>
     <li><a href="#servicios" class="mob-link">Servicios</a></li>
@@ -506,13 +510,16 @@ footer{background:var(--dark);padding:80px 70px 44px}
 // Hamburger menu
 const burger = document.getElementById('burger');
 const mobileMenu = document.getElementById('mobileMenu');
+const menuBackdrop = document.getElementById('menuBackdrop');
 function toggleMenu(open) {
   burger.classList.toggle('open', open);
   mobileMenu.classList.toggle('open', open);
+  menuBackdrop.classList.toggle('open', open);
   burger.setAttribute('aria-expanded', open);
   document.body.style.overflow = open ? 'hidden' : '';
 }
 burger.addEventListener('click', () => toggleMenu(!burger.classList.contains('open')));
+menuBackdrop.addEventListener('click', () => toggleMenu(false));
 document.querySelectorAll('.mob-link').forEach(link => {
   link.addEventListener('click', () => toggleMenu(false));
 });
