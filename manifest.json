@@ -41,7 +41,7 @@
       "name": "Reservar cita",
       "short_name": "Reservar",
       "description": "Solicita tu cita directamente",
-      "url": "/Barcelona/index.html#reserva"
+      "url": "/Barcelona/index.html"
     },
     {
       "name": "Servicios",
