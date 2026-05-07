@@ -21,15 +21,30 @@
     await OneSignal.init({
       appId: "02145648-b0b1-4d3f-8f2a-0a0d3cc472bf",
       notifyButton: {
-        enable: false,
+        enable: true,
       },
       serviceWorkerParam: { scope: "/" },
-      serviceWorkerPath: "/OneSignalSDKWorker.js"
+      serviceWorkerPath: "/OneSignalSDKWorker.js",
+      promptOptions: {
+        slidedown: {
+          prompts: [
+            {
+              type: "push",
+              autoPrompt: true,
+              text: {
+                actionMessage: "¿Quieres recibir novedades y ofertas exclusivas de Ma Chère?",
+                acceptButton: "Sí, quiero",
+                cancelButton: "Ahora no"
+              },
+              delay: {
+                pageViews: 1,
+                timeDelay: 3
+              }
+            }
+          ]
+        }
+      }
     });
-    // Pedir permiso de notificaciones a todos los visitantes tras 3 segundos
-    setTimeout(() => {
-      OneSignal.Slidedown.promptPush();
-    }, 3000);
   });
 </script>
 <style>
@@ -607,7 +622,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </div>
   <div class="pwa-banner-text">
     <div class="pwa-banner-title">Ma <em style="font-style:italic;color:var(--gold)">Chère</em></div>
-    <div class="pwa-banner-sub" id="pwaBannerSub">Entérate de todo antes que el resto. Promos, novedades...</div>
+    <div class="pwa-banner-sub" id="pwaBannerSub">Añade la app a tu pantalla de inicio</div>
   </div>
   <div class="pwa-banner-actions">
     <button class="pwa-banner-btn" id="pwaBannerBtn">Instalar</button>
@@ -758,7 +773,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
           deferredPrompt = null;
           closeModal();
           if(res.outcome === 'accepted'){
-            OneSignalDeferred.push(function(OneSignal){ OneSignal.Slidedown.promptPush(); });
+            OneSignalDeferred.push(function(OneSignal){ OneSignal.Slidedown.promptPush({ force: true }); });
           }
         });
       }
