@@ -338,6 +338,13 @@ footer{background:var(--dark);padding:80px 70px 44px}
 .pwa-install-direct.show{display:inline-flex}
 .pwa-install-direct{align-items:center;gap:10px;font-size:9px;letter-spacing:.26em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:14px 36px;border:none;cursor:pointer;font-family:'Open Sans',serif;font-weight:600;border-radius:20px;transition:background .3s;margin-top:8px}
 .pwa-install-direct:hover{background:var(--gold2);color:var(--cream)}
+/* On mobile, always show install buttons unless app is already installed */
+@media(max-width:720px){
+  .pwa-install-direct{display:inline-flex}
+  .pwa-install-direct.hide{display:none}
+  #pwaInstallDirect2{display:inline-flex}
+  #pwaInstallDirect2.hide{display:none}
+}
 .pwa-already{font-family:'Open Sans',serif;font-style:italic;font-size:12px;color:rgba(201,169,110,.35);margin-top:20px;display:none}
 .pwa-already.show{display:block}
 @media(max-width:720px){
@@ -721,23 +728,30 @@ function setPwaTab(tab){
 }
 setPwaTab(detectDevice());
 
-// Install button — solo si el navegador soporta beforeinstallprompt
+// Install button — PWA install logic
 var deferredPrompt=null;
+var isMobile=window.innerWidth<=720;
 var pwaInstallDirect=document.getElementById('pwaInstallDirect');
 var pwaInstallDirect2=document.getElementById('pwaInstallDirect2');
 var pwaAlready=document.getElementById('pwaAlready');
 
+// On desktop, buttons start hidden and only show when browser fires beforeinstallprompt.
+// On mobile (iOS/Android), buttons are always visible via CSS; JS just adds native prompt if available.
+
 function triggerInstall(btn){
   if(!deferredPrompt){
-    // Si no hay prompt nativo, scroll a la sección de instrucciones
-    document.getElementById('instalar-app').scrollIntoView({behavior:'smooth'});
+    // No native prompt (iOS or already installed) — scroll to install instructions
+    var sec=document.getElementById('instalar-app');
+    if(sec) sec.scrollIntoView({behavior:'smooth'});
     return;
   }
   deferredPrompt.prompt();
   deferredPrompt.userChoice.then(function(res){
     deferredPrompt=null;
-    if(pwaInstallDirect) pwaInstallDirect.classList.remove('show');
     if(res.outcome==='accepted'){
+      // Hide buttons and show "already installed" message
+      if(pwaInstallDirect) { pwaInstallDirect.classList.remove('show'); pwaInstallDirect.classList.add('hide'); }
+      if(pwaInstallDirect2) pwaInstallDirect2.classList.add('hide');
       if(pwaAlready) pwaAlready.classList.add('show');
       OneSignalDeferred.push(function(OneSignal){OneSignal.Slidedown.promptPush();});
     }
@@ -747,7 +761,8 @@ function triggerInstall(btn){
 window.addEventListener('beforeinstallprompt',function(e){
   e.preventDefault();
   deferredPrompt=e;
-  if(pwaInstallDirect) pwaInstallDirect.classList.add('show');
+  // On desktop, show the button now that we have a native prompt
+  if(!isMobile && pwaInstallDirect) pwaInstallDirect.classList.add('show');
 });
 if(pwaInstallDirect){
   pwaInstallDirect.addEventListener('click',function(){ triggerInstall(this); });
@@ -756,7 +771,8 @@ if(pwaInstallDirect2){
   pwaInstallDirect2.addEventListener('click',function(){ triggerInstall(this); });
 }
 window.addEventListener('appinstalled',function(){
-  if(pwaInstallDirect) pwaInstallDirect.classList.remove('show');
+  if(pwaInstallDirect) { pwaInstallDirect.classList.remove('show'); pwaInstallDirect.classList.add('hide'); }
+  if(pwaInstallDirect2) pwaInstallDirect2.classList.add('hide');
   if(pwaAlready) pwaAlready.classList.add('show');
 });
 
