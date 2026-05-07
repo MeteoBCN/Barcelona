@@ -111,7 +111,11 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:f
 .app-strip-btn{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.26em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:13px 32px;border:none;cursor:pointer;font-family:'Open Sans',serif;font-weight:600;border-radius:20px;transition:background .3s;flex-shrink:0}
 .app-strip-btn:hover{background:var(--gold2);color:var(--cream)}
 .app-strip-sub{font-family:'Open Sans',serif;font-style:italic;font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em}
-@media(max-width:720px){.app-strip{flex-direction:column;padding:20px 24px;gap:10px}.app-strip-sub{font-size:11px;text-align:center}}
+@media(max-width:720px){
+  .app-strip{flex-direction:column;padding:20px 24px;gap:10px}
+  .app-strip-sub{font-size:11px;text-align:center}
+  .app-strip-btn{display:inline-flex !important;visibility:visible !important;opacity:1 !important}
+}
 
 /* GALLERY BAND */
 .gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
@@ -734,6 +738,14 @@ var isMobile=window.innerWidth<=720;
 var pwaInstallDirect=document.getElementById('pwaInstallDirect');
 var pwaInstallDirect2=document.getElementById('pwaInstallDirect2');
 var pwaAlready=document.getElementById('pwaAlready');
+
+// Si ya esta instalada como PWA (standalone), ocultar botones de descarga
+var isStandalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true;
+if(isStandalone){
+  if(pwaInstallDirect){pwaInstallDirect.style.display='none';}
+  if(pwaInstallDirect2){pwaInstallDirect2.style.display='none';}
+  if(pwaAlready){pwaAlready.style.display='block';}
+}
 
 // On desktop, buttons start hidden and only show when browser fires beforeinstallprompt.
 // On mobile (iOS/Android), buttons are always visible via CSS; JS just adds native prompt if available.
