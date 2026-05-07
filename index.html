@@ -48,19 +48,6 @@ html{scroll-behavior:smooth}
 section[id],div[id]{scroll-margin-top:80px}
 body{font-family:'Open Sans',serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
 
-/* PWA INSTALL BANNER */
-#pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:99999;background:var(--dark);border-top:1px solid rgba(201,169,110,.3);padding:14px 24px;display:flex;align-items:center;gap:16px;transform:translateY(100%);transition:transform .5s cubic-bezier(.16,1,.3,1);box-shadow:0 -8px 32px rgba(0,0,0,.3)}
-#pwa-banner.visible{transform:translateY(0)}
-#pwa-banner img{width:44px;height:44px;border-radius:10px;flex-shrink:0}
-#pwa-banner-text{flex:1;min-width:0}
-#pwa-banner-text strong{display:block;font-family:'Playfair Display',serif;font-size:14px;font-weight:400;color:var(--ivory);letter-spacing:.06em}
-#pwa-banner-text span{font-family:'Open Sans',serif;font-size:11px;color:rgba(201,169,110,.7);letter-spacing:.04em;font-style:italic}
-#pwa-install-btn{font-size:9px;letter-spacing:.22em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:11px 22px;border:none;cursor:pointer;font-family:'Open Sans',serif;font-weight:600;border-radius:20px;flex-shrink:0;transition:background .3s}
-#pwa-install-btn:hover{background:var(--gold2);color:var(--cream)}
-#pwa-close-btn{background:none;border:none;cursor:pointer;color:rgba(201,169,110,.5);font-size:20px;padding:4px 8px;flex-shrink:0;line-height:1;transition:color .3s}
-#pwa-close-btn:hover{color:var(--gold)}
-@media(min-width:768px){#pwa-banner{left:50%;right:auto;transform:translateX(-50%) translateY(120%);width:480px;border-radius:16px 16px 0 0;padding:18px 28px}#pwa-banner.visible{transform:translateX(-50%) translateY(0)}}
-
 /* NAV */
 nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:flex;align-items:center;justify-content:space-between;transition:all .5s;background:var(--cream);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,169,110,0.15)}
 .logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:400;letter-spacing:.18em;text-decoration:none;color:#1A1714}
@@ -118,6 +105,13 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:f
 /* PORTADA IMAGE */
 .portada-wrap{width:100%;line-height:0;margin:0;padding:0}
 .portada-img{width:100%;height:auto;display:block}
+
+/* APP DOWNLOAD STRIP */
+.app-strip{background:var(--ivory);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 70px;display:flex;align-items:center;gap:24px;justify-content:center}
+.app-strip-btn{display:inline-flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.26em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:13px 32px;border:none;cursor:pointer;font-family:'Open Sans',serif;font-weight:600;border-radius:20px;transition:background .3s;flex-shrink:0}
+.app-strip-btn:hover{background:var(--gold2);color:var(--cream)}
+.app-strip-sub{font-family:'Open Sans',serif;font-style:italic;font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em}
+@media(max-width:720px){.app-strip{flex-direction:column;padding:20px 24px;gap:10px}.app-strip-sub{font-size:11px;text-align:center}}
 
 /* GALLERY BAND */
 .gallery{display:grid;grid-template-columns:1fr 1.8fr 1fr;height:480px;gap:3px}
@@ -417,6 +411,15 @@ footer{background:var(--dark);padding:80px 70px 44px}
 
 </section>
 
+<!-- APP DOWNLOAD STRIP -->
+<div class="app-strip">
+  <button class="app-strip-btn" id="pwaInstallDirect2">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Descarga la app
+  </button>
+  <span class="app-strip-sub">Gratis · Sin tienda · En tu pantalla de inicio</span>
+</div>
+
 <!-- GALLERY -->
 <div class="gallery">
   <div class="gallery-cell">
@@ -531,81 +534,6 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contacto">
-  <div class="rv">
-    <p class="section-tag">Visítanos</p>
-    <h2 class="contact-title">Estamos en<br><em>Les Corts.</em></h2>
-    <div class="contact-dets">
-      <div class="cdet">
-        <div class="cdet-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-        </div>
-        <div>
-          <div class="cdet-label">Dirección</div>
-          <div class="cdet-val">Carrer Travessera de les Corts, 285<br>08014 Barcelona</div>
-        </div>
-      </div>
-      <div class="cdet">
-        <div class="cdet-icon">
-          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-        </div>
-        <div>
-          <div class="cdet-label">Teléfono</div>
-          <div class="cdet-val"><a href="tel:+34931234567">+34 93 6277326</a></div>
-        </div>
-      </div>
-      <div class="cdet">
-        <div class="cdet-icon">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.428a.5.5 0 0 0 .609.61l5.699-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.187-1.453l-.362-.214-3.685.947.984-3.595-.235-.373A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-        </div>
-        <div>
-          <div class="cdet-label">WhatsApp</div>
-          <div class="cdet-val"><a href="https://wa.me/34624368267" target="_blank">+34 624 368 267</a></div>
-        </div>
-      </div>
-      <div class="cdet">
-        <div class="cdet-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div>
-          <div class="cdet-label">Horario</div>
-          <div class="cdet-val">Lunes – Sábado: 10:00 – 20:00</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- MAPA ESTILIZADO -->
-    <div class="map-wrap">
-      <div class="map-label">Cómo llegar</div>
-      <div class="map-container">
-        <iframe
-          src="https://maps.google.com/maps?q=Carrer+Travessera+de+les+Corts+285+08014+Barcelona&output=embed&z=16"
-          style="width:100%;height:100%;border:0;opacity:0;transition:opacity .6s"
-          loading="lazy"
-          onload="this.style.opacity=1"
-          allowfullscreen=""
-          referrerpolicy="no-referrer-when-downgrade"
-          title="Ubicación Ma Chère"
-        ></iframe>
-        <div class="map-overlay">
-          <div class="map-pin-label">
-            <svg viewBox="0 0 24 24" fill="var(--gold)" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-            <span>Ma Chère · Travessera de les Corts, 285</span>
-          </div>
-        </div>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Travessera+de+les+Corts+285+Barcelona" target="_blank" rel="noopener" class="map-directions">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          Cómo llegar
-        </a>
-      </div>
-    </div>
-    <p style="margin-top:40px;font-family:'Open Sans',serif;font-style:italic;font-size:15px;color:var(--gold);font-weight:300;letter-spacing:.06em;text-align:center">© Centro de estética integral Ma Chère</p>
-  </div>
-
-  </div>
-</section>
-
 <!-- PWA INSTALL SECTION -->
 <section class="pwa-section" id="instalar-app">
   <p class="pwa-section-tag">Siempre contigo</p>
@@ -693,21 +621,86 @@ footer{background:var(--dark);padding:80px 70px 44px}
   <p class="pwa-already" id="pwaAlready">Ya tienes la app instalada ✓</p>
 </section>
 
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="rv">
+    <p class="section-tag">Visítanos</p>
+    <h2 class="contact-title">Estamos en<br><em>Les Corts.</em></h2>
+    <div class="contact-dets">
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Dirección</div>
+          <div class="cdet-val">Carrer Travessera de les Corts, 285<br>08014 Barcelona</div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Teléfono</div>
+          <div class="cdet-val"><a href="tel:+34931234567">+34 93 6277326</a></div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.533 5.859L.057 23.428a.5.5 0 0 0 .609.61l5.699-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.187-1.453l-.362-.214-3.685.947.984-3.595-.235-.373A9.955 9.955 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">WhatsApp</div>
+          <div class="cdet-val"><a href="https://wa.me/34624368267" target="_blank">+34 624 368 267</a></div>
+        </div>
+      </div>
+      <div class="cdet">
+        <div class="cdet-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <div class="cdet-label">Horario</div>
+          <div class="cdet-val">Lunes – Sábado: 10:00 – 20:00</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAPA ESTILIZADO -->
+    <div class="map-wrap">
+      <div class="map-label">Cómo llegar</div>
+      <div class="map-container">
+        <iframe
+          src="https://maps.google.com/maps?q=Carrer+Travessera+de+les+Corts+285+08014+Barcelona&output=embed&z=16"
+          style="width:100%;height:100%;border:0;opacity:0;transition:opacity .6s"
+          loading="lazy"
+          onload="this.style.opacity=1"
+          allowfullscreen=""
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación Ma Chère"
+        ></iframe>
+        <div class="map-overlay">
+          <div class="map-pin-label">
+            <svg viewBox="0 0 24 24" fill="var(--gold)" width="16" height="16"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span>Ma Chère · Travessera de les Corts, 285</span>
+          </div>
+        </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Travessera+de+les+Corts+285+Barcelona" target="_blank" rel="noopener" class="map-directions">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Cómo llegar
+        </a>
+      </div>
+    </div>
+    <p style="margin-top:40px;font-family:'Open Sans',serif;font-style:italic;font-size:15px;color:var(--gold);font-weight:300;letter-spacing:.06em;text-align:center">© Centro de estética integral Ma Chère</p>
+  </div>
+
+  </div>
+</section>
+
 <!-- WHATSAPP FLOTANTE -->
 <a href="https://wa.me/34624368267?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20informaci%C3%B3n%20sobre%20vuestros%20servicios" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp" style="position:fixed;bottom:28px;right:28px;width:60px;height:60px;background:#C9A96E;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:9999;transition:transform .2s,background .2s;box-shadow:0 4px 18px rgba(201,169,110,.4)" onmouseover="this.style.transform='scale(1.1)';this.style.background='#A07840'" onmouseout="this.style.transform='scale(1)';this.style.background='#C9A96E'">
   <svg viewBox="0 0 24 24" fill="white" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- PWA INSTALL BANNER -->
-<div id="pwa-banner" role="dialog" aria-label="Instalar aplicación">
-  <img src="/icon-192.png" alt="Ma Chère">
-  <div id="pwa-banner-text">
-    <strong>Ma Chère</strong>
-    <span>Instala la app y estarás al día de nuestras promos y novedades</span>
-  </div>
-  <button id="pwa-install-btn">Instalar</button>
-  <button id="pwa-close-btn" aria-label="Cerrar">✕</button>
-</div>
 
 <script>
 
@@ -731,9 +724,25 @@ setPwaTab(detectDevice());
 // Install button — solo si el navegador soporta beforeinstallprompt
 var deferredPrompt=null;
 var pwaInstallDirect=document.getElementById('pwaInstallDirect');
+var pwaInstallDirect2=document.getElementById('pwaInstallDirect2');
 var pwaAlready=document.getElementById('pwaAlready');
-var banner=document.getElementById('pwa-banner');
-var closeBtn=document.getElementById('pwa-close-btn');
+
+function triggerInstall(btn){
+  if(!deferredPrompt){
+    // Si no hay prompt nativo, scroll a la sección de instrucciones
+    document.getElementById('instalar-app').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(function(res){
+    deferredPrompt=null;
+    if(pwaInstallDirect) pwaInstallDirect.classList.remove('show');
+    if(res.outcome==='accepted'){
+      if(pwaAlready) pwaAlready.classList.add('show');
+      OneSignalDeferred.push(function(OneSignal){OneSignal.Slidedown.promptPush();});
+    }
+  });
+}
 
 window.addEventListener('beforeinstallprompt',function(e){
   e.preventDefault();
@@ -741,28 +750,15 @@ window.addEventListener('beforeinstallprompt',function(e){
   if(pwaInstallDirect) pwaInstallDirect.classList.add('show');
 });
 if(pwaInstallDirect){
-  pwaInstallDirect.addEventListener('click',async function(){
-    if(!deferredPrompt) return;
-    deferredPrompt.prompt();
-    var res=await deferredPrompt.userChoice;
-    deferredPrompt=null;
-    pwaInstallDirect.classList.remove('show');
-    if(res.outcome==='accepted'){
-      if(pwaAlready) pwaAlready.classList.add('show');
-      OneSignalDeferred.push(function(OneSignal){OneSignal.Slidedown.promptPush();});
-    }
-  });
+  pwaInstallDirect.addEventListener('click',function(){ triggerInstall(this); });
+}
+if(pwaInstallDirect2){
+  pwaInstallDirect2.addEventListener('click',function(){ triggerInstall(this); });
 }
 window.addEventListener('appinstalled',function(){
   if(pwaInstallDirect) pwaInstallDirect.classList.remove('show');
   if(pwaAlready) pwaAlready.classList.add('show');
-  if(banner) banner.classList.remove('visible');
 });
-if(closeBtn) closeBtn.addEventListener('click',function(){
-  banner.classList.remove('visible');
-  sessionStorage.setItem('pwa-banner-dismissed','1');
-});
-if(sessionStorage.getItem('pwa-banner-dismissed')&&banner) banner.style.display='none';
 
 // Modal reserva
 const btnReservar = document.getElementById('btnReservar');
