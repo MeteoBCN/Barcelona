@@ -317,6 +317,41 @@ footer{background:var(--dark);padding:80px 70px 44px}
     gap:12px;
     text-align:center;
   }
+/* PWA INSTALL SECTION */
+.pwa-section{background:var(--dark);padding:72px 70px;text-align:center;border-top:1px solid rgba(201,169,110,.12)}
+.pwa-section-tag{font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:300;margin-bottom:24px}
+.pwa-section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);font-weight:300;color:var(--ivory);line-height:1.2;margin-bottom:16px}
+.pwa-section-title em{font-style:italic;color:var(--gold)}
+.pwa-section-sub{font-family:'Open Sans',serif;font-style:italic;font-size:15px;color:rgba(242,235,224,.45);font-weight:300;letter-spacing:.04em;margin-bottom:52px;max-width:460px;margin-left:auto;margin-right:auto}
+.pwa-steps-wrap{display:flex;justify-content:center;gap:0;max-width:680px;margin:0 auto 48px;border:1px solid rgba(201,169,110,.15);overflow:hidden}
+.pwa-step{flex:1;padding:36px 28px;position:relative;border-right:1px solid rgba(201,169,110,.12)}
+.pwa-step:last-child{border-right:none}
+.pwa-step-num{font-family:'Playfair Display',serif;font-size:42px;font-weight:300;font-style:italic;color:rgba(201,169,110,.1);line-height:1;margin-bottom:16px}
+.pwa-step-icon{width:36px;height:36px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,169,110,.3);border-radius:50%}
+.pwa-step-icon svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.4}
+.pwa-step h4{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;color:var(--ivory);margin-bottom:8px;letter-spacing:.04em}
+.pwa-step p{font-family:'Open Sans',serif;font-style:italic;font-size:12px;color:rgba(242,235,224,.4);line-height:1.7;font-weight:300}
+.pwa-step p strong{color:rgba(201,169,110,.7);font-style:normal;font-weight:400}
+.pwa-device-tabs{display:flex;justify-content:center;gap:0;margin-bottom:40px;border:1px solid rgba(201,169,110,.2);max-width:360px;margin-left:auto;margin-right:auto;margin-bottom:40px;overflow:hidden}
+.pwa-tab{flex:1;padding:11px 20px;background:none;border:none;cursor:pointer;font-family:'Open Sans',serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(201,169,110,.45);font-weight:400;transition:all .3s;border-right:1px solid rgba(201,169,110,.2)}
+.pwa-tab:last-child{border-right:none}
+.pwa-tab.active{background:rgba(201,169,110,.1);color:var(--gold)}
+.pwa-steps-ios,.pwa-steps-android,.pwa-steps-desktop{display:none}
+.pwa-steps-ios.active,.pwa-steps-android.active,.pwa-steps-desktop.active{display:flex}
+.pwa-install-direct{display:none}
+.pwa-install-direct.show{display:inline-flex}
+.pwa-install-direct{align-items:center;gap:10px;font-size:9px;letter-spacing:.26em;text-transform:uppercase;background:var(--gold);color:var(--dark);padding:14px 36px;border:none;cursor:pointer;font-family:'Open Sans',serif;font-weight:600;border-radius:20px;transition:background .3s;margin-top:8px}
+.pwa-install-direct:hover{background:var(--gold2);color:var(--cream)}
+.pwa-already{font-family:'Open Sans',serif;font-style:italic;font-size:12px;color:rgba(201,169,110,.35);margin-top:20px;display:none}
+.pwa-already.show{display:block}
+@media(max-width:720px){
+  .pwa-section{padding:60px 24px}
+  .pwa-steps-wrap{flex-direction:column;max-width:340px}
+  .pwa-step{border-right:none;border-bottom:1px solid rgba(201,169,110,.12)}
+  .pwa-step:last-child{border-bottom:none}
+  .pwa-device-tabs{max-width:100%}
+}
+
 /* MODAL RESERVA */
 .modal-backdrop{display:none;position:fixed;inset:0;z-index:1000;background:rgba(26,23,20,0);pointer-events:none;transition:background .4s ease}
 .modal-backdrop.open{display:flex;align-items:center;justify-content:center;background:rgba(26,23,20,.75);pointer-events:all}
@@ -570,6 +605,93 @@ footer{background:var(--dark);padding:80px 70px 44px}
   </div>
 </section>
 
+<!-- PWA INSTALL SECTION -->
+<section class="pwa-section" id="instalar-app">
+  <p class="pwa-section-tag">Siempre contigo</p>
+  <h2 class="pwa-section-title">Instala nuestra<br><em>app gratuita</em></h2>
+  <p class="pwa-section-sub">Accede a nuestras novedades, promociones exclusivas y reservas en un toque — desde la pantalla de inicio de tu móvil, sin descargas en tienda.</p>
+
+  <!-- Tabs de dispositivo — se preselecciona el correcto por JS -->
+  <div class="pwa-device-tabs" id="pwaTabs">
+    <button class="pwa-tab" id="tab-ios" onclick="setPwaTab('ios')">iPhone</button>
+    <button class="pwa-tab" id="tab-android" onclick="setPwaTab('android')">Android</button>
+    <button class="pwa-tab" id="tab-desktop" onclick="setPwaTab('desktop')">Escritorio</button>
+  </div>
+
+  <!-- iOS -->
+  <div class="pwa-steps-wrap pwa-steps-ios" id="steps-ios">
+    <div class="pwa-step">
+      <div class="pwa-step-num">1</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><path d="M8 12h8M12 8v8"/></svg></div>
+      <h4>Abre Safari</h4>
+      <p>Visita esta página desde el navegador <strong>Safari</strong> de tu iPhone o iPad</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">2</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8M16 6l-4-4-4 4M12 2v13"/></svg></div>
+      <h4>Compartir</h4>
+      <p>Pulsa el icono <strong>Compartir</strong> (cuadrado con flecha) en la barra inferior</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">3</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg></div>
+      <h4>Añadir al inicio</h4>
+      <p>Selecciona <strong>"Añadir a pantalla de inicio"</strong> y confirma</p>
+    </div>
+  </div>
+
+  <!-- Android -->
+  <div class="pwa-steps-wrap pwa-steps-android" id="steps-android">
+    <div class="pwa-step">
+      <div class="pwa-step-num">1</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+      <h4>Abre Chrome</h4>
+      <p>Visita esta página desde <strong>Google Chrome</strong> en tu Android</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">2</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <h4>Menú del navegador</h4>
+      <p>Pulsa los <strong>tres puntos</strong> ⋮ en la esquina superior derecha</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">3</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+      <h4>Añadir al inicio</h4>
+      <p>Toca <strong>"Añadir a pantalla de inicio"</strong> o <strong>"Instalar app"</strong></p>
+    </div>
+  </div>
+
+  <!-- Desktop -->
+  <div class="pwa-steps-wrap pwa-steps-desktop" id="steps-desktop">
+    <div class="pwa-step">
+      <div class="pwa-step-num">1</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+      <h4>Desde Chrome</h4>
+      <p>Usa <strong>Google Chrome</strong> o Edge en tu ordenador</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">2</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></div>
+      <h4>Instala en un clic</h4>
+      <p>Verás un icono de <strong>instalación</strong> en la barra de dirección — pulsa "Instalar"</p>
+    </div>
+    <div class="pwa-step">
+      <div class="pwa-step-num">3</div>
+      <div class="pwa-step-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h4>¡Listo!</h4>
+      <p>La app aparecerá en tu escritorio con <strong>acceso directo</strong></p>
+    </div>
+  </div>
+
+  <!-- Botón directo solo si el navegador lo soporta -->
+  <button class="pwa-install-direct" id="pwaInstallDirect">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+    Instalar app
+  </button>
+  <p class="pwa-already" id="pwaAlready">Ya tienes la app instalada ✓</p>
+</section>
+
 <!-- WHATSAPP FLOTANTE -->
 <a href="https://wa.me/34624368267?text=Hola%2C%20me%20gustar%C3%ADa%20pedir%20informaci%C3%B3n%20sobre%20vuestros%20servicios" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp" style="position:fixed;bottom:28px;right:28px;width:60px;height:60px;background:#C9A96E;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:9999;transition:transform .2s,background .2s;box-shadow:0 4px 18px rgba(201,169,110,.4)" onmouseover="this.style.transform='scale(1.1)';this.style.background='#A07840'" onmouseout="this.style.transform='scale(1)';this.style.background='#C9A96E'">
   <svg viewBox="0 0 24 24" fill="white" width="30" height="30" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -588,48 +710,58 @@ footer{background:var(--dark);padding:80px 70px 44px}
 
 <script>
 
-// PWA Install Banner
-let deferredPrompt = null;
-const banner = document.getElementById('pwa-banner');
-const installBtn = document.getElementById('pwa-install-btn');
-const closeBtn = document.getElementById('pwa-close-btn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  // Mostrar banner tras 2 segundos
-  setTimeout(() => banner.classList.add('visible'), 2000);
-});
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-  banner.classList.remove('visible');
-  // Pedir permiso de notificaciones tras instalar
-  if (outcome === 'accepted') {
-    OneSignalDeferred.push(function(OneSignal) {
-      OneSignal.Slidedown.promptPush();
-    });
-  }
-});
-
-closeBtn.addEventListener('click', () => {
-  banner.classList.remove('visible');
-  // No volver a mostrar en esta sesión
-  sessionStorage.setItem('pwa-banner-dismissed', '1');
-});
-
-// No mostrar si ya lo descartó
-if (sessionStorage.getItem('pwa-banner-dismissed')) {
-  banner.style.display = 'none';
+// PWA — detectar dispositivo y preseleccionar tab
+function detectDevice(){
+  var ua=navigator.userAgent;
+  if(/iPad|iPhone|iPod/.test(ua)) return 'ios';
+  if(/android/i.test(ua)) return 'android';
+  return 'desktop';
 }
+function setPwaTab(tab){
+  document.querySelectorAll('.pwa-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.pwa-steps-ios,.pwa-steps-android,.pwa-steps-desktop').forEach(function(s){s.classList.remove('active');});
+  var tabEl=document.getElementById('tab-'+tab);
+  var stepsEl=document.getElementById('steps-'+tab);
+  if(tabEl) tabEl.classList.add('active');
+  if(stepsEl) stepsEl.classList.add('active');
+}
+setPwaTab(detectDevice());
 
-// Si ya está instalada, no mostrar
-window.addEventListener('appinstalled', () => {
-  banner.classList.remove('visible');
+// Install button — solo si el navegador soporta beforeinstallprompt
+var deferredPrompt=null;
+var pwaInstallDirect=document.getElementById('pwaInstallDirect');
+var pwaAlready=document.getElementById('pwaAlready');
+var banner=document.getElementById('pwa-banner');
+var closeBtn=document.getElementById('pwa-close-btn');
+
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault();
+  deferredPrompt=e;
+  if(pwaInstallDirect) pwaInstallDirect.classList.add('show');
 });
+if(pwaInstallDirect){
+  pwaInstallDirect.addEventListener('click',async function(){
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    var res=await deferredPrompt.userChoice;
+    deferredPrompt=null;
+    pwaInstallDirect.classList.remove('show');
+    if(res.outcome==='accepted'){
+      if(pwaAlready) pwaAlready.classList.add('show');
+      OneSignalDeferred.push(function(OneSignal){OneSignal.Slidedown.promptPush();});
+    }
+  });
+}
+window.addEventListener('appinstalled',function(){
+  if(pwaInstallDirect) pwaInstallDirect.classList.remove('show');
+  if(pwaAlready) pwaAlready.classList.add('show');
+  if(banner) banner.classList.remove('visible');
+});
+if(closeBtn) closeBtn.addEventListener('click',function(){
+  banner.classList.remove('visible');
+  sessionStorage.setItem('pwa-banner-dismissed','1');
+});
+if(sessionStorage.getItem('pwa-banner-dismissed')&&banner) banner.style.display='none';
 
 // Modal reserva
 const btnReservar = document.getElementById('btnReservar');
