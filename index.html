@@ -13,6 +13,25 @@
 <link rel="apple-touch-icon" href="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=192&q=85">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<!-- OneSignal SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "02145648-b0b1-4d3f-8f2a-0a0d3cc472bf",
+      notifyButton: {
+        enable: false,
+      },
+      serviceWorkerParam: { scope: "/" },
+      serviceWorkerPath: "/OneSignalSDKWorker.js"
+    });
+    // Pedir permiso de notificaciones a todos los visitantes tras 3 segundos
+    setTimeout(() => {
+      OneSignal.Slidedown.promptPush();
+    }, 3000);
+  });
+</script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
