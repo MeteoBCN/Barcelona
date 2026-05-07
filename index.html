@@ -310,6 +310,29 @@ footer{background:var(--dark);padding:80px 70px 44px}
 .modal-close:hover{color:var(--gold)}
 .modal-body{padding:28px}
 </style>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "02145648-b0b1-4d3f-8f2a-0a0d3cc472bf",
+      notifyButton: { enable: false },
+      promptOptions: {
+        slidedown: {
+          prompts: [{
+            type: "push",
+            autoPrompt: false,
+            text: {
+              actionMessage: "¿Quieres recibir novedades y promociones de Ma Chère?",
+              acceptButton: "Sí, quiero",
+              cancelButton: "Ahora no"
+            }
+          }]
+        }
+      }
+    });
+  });
+</script>
 </head>
 <body>
 
@@ -588,6 +611,12 @@ installBtn.addEventListener('click', async () => {
   const { outcome } = await deferredPrompt.userChoice;
   deferredPrompt = null;
   banner.classList.remove('visible');
+  // Pedir permiso de notificaciones tras instalar
+  if (outcome === 'accepted') {
+    OneSignalDeferred.push(function(OneSignal) {
+      OneSignal.Slidedown.promptPush();
+    });
+  }
 });
 
 closeBtn.addEventListener('click', () => {
