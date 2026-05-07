@@ -112,9 +112,10 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:24px 70px;display:f
 .app-strip-btn:hover{background:var(--gold2);color:var(--cream)}
 .app-strip-sub{font-family:'Open Sans',serif;font-style:italic;font-size:13px;color:var(--muted);font-weight:300;letter-spacing:.04em}
 @media(max-width:720px){
-  .app-strip{flex-direction:column;padding:20px 24px;gap:10px}
-  .app-strip-sub{font-size:11px;text-align:center}
-  .app-strip-btn{display:inline-flex !important;visibility:visible !important;opacity:1 !important}
+  .app-strip{flex-direction:row;padding:10px 16px;gap:12px;justify-content:flex-start}
+  .app-strip-btn{font-size:8px;padding:9px 16px;gap:7px;letter-spacing:.18em;display:inline-flex !important}
+  .app-strip-btn svg{width:14px;height:14px}
+  .app-strip-sub{font-size:10px;text-align:left}
 }
 
 /* GALLERY BAND */
