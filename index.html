@@ -14,36 +14,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <!-- OneSignal SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"></script>
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
       appId: "02145648-b0b1-4d3f-8f2a-0a0d3cc472bf",
-      notifyButton: {
-        enable: true,
-      },
+      notifyButton: { enable: false },
       serviceWorkerParam: { scope: "/" },
       serviceWorkerPath: "/OneSignalSDKWorker.js",
-      promptOptions: {
-        slidedown: {
-          prompts: [
-            {
-              type: "push",
-              autoPrompt: true,
-              text: {
-                actionMessage: "¿Quieres recibir novedades y ofertas exclusivas de Ma Chère?",
-                acceptButton: "Sí, quiero",
-                cancelButton: "Ahora no"
-              },
-              delay: {
-                pageViews: 1,
-                timeDelay: 3
-              }
-            }
-          ]
-        }
-      }
+      allowLocalhostAsSecureOrigin: true,
     });
   });
 </script>
@@ -353,6 +333,25 @@ footer{background:var(--dark);padding:80px 70px 44px}
   .pwa-banner-title{font-size:13px}
 }
 
+/* NOTIF BANNER */
+.notif-banner{position:fixed;bottom:0;left:0;right:0;z-index:7500;background:#1A1714;border-top:1px solid rgba(201,169,110,.3);padding:18px 24px;display:flex;align-items:center;gap:14px;transform:translateY(110%);transition:transform .45s cubic-bezier(.4,0,.2,1);box-shadow:0 -4px 28px rgba(0,0,0,.4)}
+.notif-banner.show{transform:translateY(0)}
+.notif-banner-icon{width:40px;height:40px;border-radius:50%;background:rgba(201,169,110,.15);border:1px solid rgba(201,169,110,.35);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.notif-banner-icon svg{width:18px;height:18px;fill:var(--gold)}
+.notif-banner-text{flex:1;min-width:0}
+.notif-banner-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:400;color:var(--ivory);letter-spacing:.04em;margin-bottom:2px}
+.notif-banner-sub{font-family:'Open Sans',serif;font-style:italic;font-size:11px;color:rgba(242,235,224,.4);font-weight:300;line-height:1.4}
+.notif-banner-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.notif-banner-yes{font-family:'Open Sans',serif;font-size:8px;letter-spacing:.2em;text-transform:uppercase;background:var(--gold);color:var(--dark);border:none;padding:9px 18px;border-radius:20px;cursor:pointer;font-weight:600;transition:background .3s;white-space:nowrap}
+.notif-banner-yes:hover{background:var(--gold2)}
+.notif-banner-no{background:none;border:none;cursor:pointer;color:rgba(242,235,224,.3);font-size:20px;line-height:1;padding:4px 6px;transition:color .3s;flex-shrink:0}
+.notif-banner-no:hover{color:var(--gold)}
+@media(max-width:480px){
+  .notif-banner{padding:14px 16px;gap:10px}
+  .notif-banner-icon{width:36px;height:36px}
+  .notif-banner-title{font-size:12px}
+}
+
 /* PWA INSTALL MODAL */
 .pwa-modal-backdrop{display:none;position:fixed;inset:0;z-index:9000;background:rgba(26,23,20,.7);align-items:flex-end;justify-content:center;padding:0}
 .pwa-modal-backdrop.open{display:flex}
@@ -614,6 +613,21 @@ footer{background:var(--dark);padding:80px 70px 44px}
 </section>
 
 
+<!-- NOTIFICACIONES BANNER -->
+<div class="notif-banner" id="notifBanner">
+  <div class="notif-banner-icon">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+  </div>
+  <div class="notif-banner-text">
+    <div class="notif-banner-title">Ofertas exclusivas de Ma <em style="font-style:italic;color:var(--gold)">Chère</em></div>
+    <div class="notif-banner-sub">Activa las notificaciones y sé la primera en saberlo</div>
+  </div>
+  <div class="notif-banner-actions">
+    <button class="notif-banner-yes" id="notifBannerYes">Activar</button>
+    <button class="notif-banner-no" id="notifBannerNo" aria-label="No gracias">✕</button>
+  </div>
+</div>
+
 <!-- PWA INSTALL BANNER -->
 <div class="pwa-banner" id="pwaBanner">
   <div class="pwa-banner-icon">
@@ -842,6 +856,42 @@ document.querySelectorAll('.btn-reservar').forEach(btn => {
     }
   });
 });
+
+// NOTIF BANNER - funciona en móvil porque se activa por gesto del usuario
+(function(){
+  var nb = document.getElementById('notifBanner');
+  var nbYes = document.getElementById('notifBannerYes');
+  var nbNo = document.getElementById('notifBannerNo');
+  if(!nb) return;
+  // No mostrar si ya dio permiso o rechazó o cerró el banner
+  if(sessionStorage.getItem('notifBannerClosed')) return;
+  if(typeof Notification !== 'undefined' && Notification.permission === 'granted') return;
+  if(typeof Notification !== 'undefined' && Notification.permission === 'denied') return;
+
+  // Mostrar tras 5 segundos
+  setTimeout(function(){ nb.classList.add('show'); }, 5000);
+
+  nbYes.addEventListener('click', function(){
+    nb.classList.remove('show');
+    sessionStorage.setItem('notifBannerClosed','1');
+    // Llamar a OneSignal tras gesto del usuario — funciona en móvil
+    if(window.OneSignalDeferred){
+      window.OneSignalDeferred.push(function(OneSignal){
+        OneSignal.Notifications.requestPermission().then(function(accepted){
+          if(accepted) console.log('Notificaciones activadas');
+        }).catch(function(){
+          // fallback al slidedown si requestPermission no está disponible
+          try { OneSignal.Slidedown.promptPush({ force: true }); } catch(e){}
+        });
+      });
+    }
+  });
+
+  nbNo.addEventListener('click', function(){
+    nb.classList.remove('show');
+    sessionStorage.setItem('notifBannerClosed','1');
+  });
+})();
 
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{
