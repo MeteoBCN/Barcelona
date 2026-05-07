@@ -18,22 +18,10 @@
       "purpose": "any"
     },
     {
-      "src": "/Barcelona/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
       "src": "/Barcelona/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/Barcelona/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
@@ -56,28 +44,14 @@
     {
       "name": "Reservar cita",
       "short_name": "Reservar",
-      "description": "Solicita tu cita directamente",
       "url": "/Barcelona/index.html",
-      "icons": [
-        {
-          "src": "/Barcelona/shortcut-reservar.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
+      "icons": [{ "src": "/Barcelona/shortcut-reservar.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Servicios",
       "short_name": "Servicios",
-      "description": "Ver todos los tratamientos",
       "url": "/Barcelona/index.html#servicios",
-      "icons": [
-        {
-          "src": "/Barcelona/shortcut-servicios.png",
-          "sizes": "96x96",
-          "type": "image/png"
-        }
-      ]
+      "icons": [{ "src": "/Barcelona/shortcut-servicios.png", "sizes": "96x96", "type": "image/png" }]
     }
   ]
 }
