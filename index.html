@@ -326,9 +326,7 @@ footer{background:var(--dark);padding:80px 70px 44px}
       <div class="modal-header-title">Reservar en Ma <em>Chère</em></div>
       <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
     </div>
-    <div class="modal-body">
-      <script type="text/javascript" src="https://booksy.com/widget/code.js?id=178988&country=es&lang=es"></script>
-    </div>
+    <div class="modal-body" id="booksyContainer"></div>
   </div>
 </div>
 
@@ -613,10 +611,17 @@ const btnReservar = document.getElementById('btnReservar');
 const modalReserva = document.getElementById('modalReserva');
 const modalClose = document.getElementById('modalClose');
 
+let booksyLoaded = false;
 btnReservar.addEventListener('click', (e) => {
   e.preventDefault();
   modalReserva.classList.add('open');
   document.body.style.overflow = 'hidden';
+  if (!booksyLoaded) {
+    booksyLoaded = true;
+    const s = document.createElement('script');
+    s.src = 'https://booksy.com/widget/code.js?id=178988&country=es&lang=es';
+    document.getElementById('booksyContainer').appendChild(s);
+  }
 });
 modalClose.addEventListener('click', () => {
   modalReserva.classList.remove('open');
